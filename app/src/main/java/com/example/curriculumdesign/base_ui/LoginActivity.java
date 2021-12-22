@@ -132,7 +132,7 @@ public class LoginActivity extends BaseActivity {
                     Headers headers=response.headers();
                     String token=headers.get("Authorization");
                     SaveToSP("Authorization",token);
-                    navgateToWithFlag(MainActivity.class,
+                    navgateToWithFlag(HomeActivity.class,
                             Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     ShowToastAsyn("登录成功");
                 } else {

@@ -19,7 +19,8 @@
         app:bl_itemSpace="10dp"
         app:bl_moveSpeed="1.8" />
 
-<!--    </LinearLayout>-->
+
+    <!--    </LinearLayout>-->
     <!--控制栏控件,宽度同主页面-->
     <FrameLayout
         android:id="@+id/Thunder_main_contain"

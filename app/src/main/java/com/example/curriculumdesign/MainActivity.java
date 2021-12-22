@@ -5,8 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.curriculumdesign.activity.BaseActivity;
-import com.example.curriculumdesign.base_ui.BannerAdapter;
-import com.example.curriculumdesign.base_ui.LoginActivity;
+import com.example.curriculumdesign.activity.HomeActivity;
 import com.xuexiang.xui.widget.banner.recycler.BannerLayout;
 
 import com.xuexiang.xui.widget.toast.XToast;
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity implements BannerLayout.OnBannerItemClickListener {
 
-    private BannerAdapter mAdapter;
+//    private MyBannerAdapter mAdapter;
     private BannerLayout mBl;
 //    轮播图数据
     public String[] urls = new String[]{
@@ -56,27 +55,11 @@ public class MainActivity extends BaseActivity implements BannerLayout.OnBannerI
         PicList.add(R.drawable.p3);
         PicList.add(R.drawable.p4);
         PicList.add(R.drawable.p5);
-        //      看网络情况，网络情况不好就用 本地的
-//        mAdapter = new BannerAdapter(this,urls);
-//        PicList.add(R.drawable.pone);
-//        PicList.add(R.drawable.ptwo);
-//        PicList.add(R.drawable.pthree);
-//        PicList.add(R.drawable.pfour);
-//        PicList.add(R.drawable.pfive);
-
-        mAdapter = new BannerAdapter(this ,PicList);
-        mBl.setAdapter(mAdapter);
-
-        //当轮播到某一项时执行
-//        mBl.setOnIndicatorIndexChangedListener(new BannerLayout.OnIndicatorIndexChangedListener() {
-//            @Override
-//            public void onIndexChanged(int position) {
-//                XToast.normal(MainActivity.this,"轮播到了第 "+position+" 个"  ).show();
-//            }
-//        });
-        //设置 item 点击事件
-        mAdapter.setOnBannerItemClickListener(this);
-//        ShowToast(GetStringFromSP("Authorization"));
+       // mAdapter = new BannerAdapter(this ,PicList);
+      //  mBl.setAdapter(mAdapter);
+//
+//        mAdapter.setOnBannerItemClickListener(this);
+////        ShowToast(GetStringFromSP("Authorization"));
     }
     @Override
     public void onItemClick(int position) {

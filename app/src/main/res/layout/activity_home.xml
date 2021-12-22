@@ -9,13 +9,50 @@
     android:layout_height="match_parent"
     tools:context=".activity.HomeActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:background="@color/xui_config_color_main_theme"
+        android:orientation="vertical">
 
-    <androidx.viewpager.widget.ViewPager
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginRight="24dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/slidingTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        tl:tl_indicator_corner_radius="1.5dp"
+        tl:tl_indicator_height="3dp"
+        tl:tl_indicator_width="17dp"
+        tl:tl_textSelectColor="#fdf299"
+        tl:tl_textUnselectColor="#ffffff"
+        tl:tl_indicator_color="#fdf299"
+        tl:tl_textsize="16sp" />
+    </LinearLayout>
+
+
+
+
+    <com.example.curriculumdesign.view.FixedViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider" />
 
     <com.flyco.tablayout.CommonTabLayout
         android:id="@+id/commonTabLayout"
