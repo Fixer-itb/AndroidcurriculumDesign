@@ -2,6 +2,8 @@ package com.example.curriculumdesign.api;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static com.example.curriculumdesign.api.ApiConfig.BASE_URL;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +21,7 @@ import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -40,14 +43,13 @@ public class Api {
     public static Api config(String url,HashMap<String,Object> params)
     {
         client=new OkHttpClient.Builder().build();
-        requestUrl= com.example.myapplication3.api.ApiConfig.BASE_URL+url;
+        requestUrl= BASE_URL+url;
         mParams=params;
         return api;
     }
-    public void postRequest(Context mContext,final CallBack callback)
+    public void postRequest1(Context mContext,final CallBack callback)
     {
-        SharedPreferences sp = mContext.getSharedPreferences("sp_znjz", MODE_PRIVATE);
-        String token = sp.getString("Authorization", "");
+        String url=getAppendUrl(requestUrl,mParams);
         JSONObject jsonObject = new JSONObject(mParams);
         String jsonStr = jsonObject.toString();
         RequestBody requestBodyJson =
@@ -55,7 +57,40 @@ public class Api {
                         , jsonStr);
         //第三步创建Rquest
         Request request = new Request.Builder()
-                .url(requestUrl)
+                .url(url)
+                .addHeader("contentType", "application/json;charset=UTF-8")
+                .post(requestBodyJson)
+                .build();
+        //第四步创建call回调对象
+        final Call call = client.newCall(request);
+        //第五步发起请求
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("onFailure", e.getMessage());
+                callback.OnFailure(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                callback.OnSuccess(result,response);
+            }
+        });
+    }
+    public void postRequest(Context mContext,final CallBack callback)
+    {
+        SharedPreferences sp = mContext.getSharedPreferences("sp_znjz", MODE_PRIVATE);
+        String token = sp.getString("Authorization", "");
+        String url=getAppendUrl(requestUrl,mParams);
+        JSONObject jsonObject = new JSONObject(mParams);
+        String jsonStr = jsonObject.toString();
+        RequestBody requestBodyJson =
+                RequestBody.create(MediaType.parse("application/json;charset=utf-8")
+                        , jsonStr);
+        //第三步创建Rquest
+        Request request = new Request.Builder()
+                .url(url)
                 .addHeader("contentType", "application/json;charset=UTF-8")
                 .addHeader("Authorization",token)
                 .post(requestBodyJson)
@@ -73,11 +108,11 @@ public class Api {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String result = response.body().string();
-                callback.OnSuccess(result);
+                callback.OnSuccess(result,response);
             }
         });
     }
-
+    //此处是登陆post
     public void postRequest(final CallBack callback)
     {
         JSONObject jsonObject = new JSONObject(mParams);
@@ -104,7 +139,9 @@ public class Api {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 final String result = response.body().string();
-                callback.OnSuccess(result);
+                Headers headers = response.headers();
+                callback.OnSuccess(result,response);
+
             }
         });
     }
@@ -140,7 +177,7 @@ public class Api {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                callBack.OnSuccess(result);
+                callBack.OnSuccess(result,response);
             }
         });
     }
