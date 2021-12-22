@@ -1,4 +1,4 @@
-package com.example.curriculumdesign;
+package com.example.curriculumdesign.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -21,8 +21,21 @@ public abstract class BaseActivity extends AppCompatActivity {
         initView();
         initData();
     }
+
+    /**
+     * 启动的界面如 R.layout.activity_home
+     * @return R.layout.activity_home
+     */
     protected abstract int initLayout();
+
+    /**
+     * 在这个绑定视图
+     */
     protected abstract void initView();
+
+    /**
+     * 加载绑定数据
+     */
     protected abstract void initData();
     public void ShowToast(String msg)
     {
