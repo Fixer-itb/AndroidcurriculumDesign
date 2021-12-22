@@ -63,6 +63,16 @@
         <entry key="..\:/Project/Android/curriculumDesign/app/src/main/res/layout/recycler_view_item_teach_course_home.xml" value="0.24322916666666666" />
         <entry key="..\:/Project/Android/curriculumDesign/app/src/main/res/layout/recycler_view_item_theme.xml" value="0.29375" />
         <entry key="..\:/Project/Android/curriculumDesign/app/src/main/res/menu/bottom_nav_menu.xml" value="0.24322916666666666" />
+        <entry key="app/src/main/res/layout/activity_course_details.xml" value="0.18229166666666666" />
+        <entry key="app/src/main/res/layout/activity_course_handle.xml" value="0.18229166666666666" />
+        <entry key="app/src/main/res/layout/activity_course_student_info.xml" value="0.18229166666666666" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.18229166666666666" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.18229166666666666" />
+        <entry key="app/src/main/res/layout/activity_register.xml" value="0.18229166666666666" />
+        <entry key="app/src/main/res/layout/recycler_view_item_learn_course_home.xml" value="0.18229166666666666" />
+        <entry key="app/src/main/res/layout/recycler_view_item_sign_record.xml" value="0.18229166666666666" />
+        <entry key="app/src/main/res/layout/recycler_view_item_student.xml" value="0.18229166666666666" />
+        <entry key="app/src/main/res/layout/recycler_view_item_teach_course_home.xml" value="0.18229166666666666" />
       </map>
     </option>
   </component>

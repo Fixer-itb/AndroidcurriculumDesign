@@ -12,9 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.curriculumdesign.BaseActivity;
 import com.example.curriculumdesign.R;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
     private EditText mETUserName;//创建新的用户真实姓名
     private EditText mETNewUserName;//监听新建账号
     private EditText mETPassword;//监听新的密码
@@ -22,10 +23,14 @@ public class RegisterActivity extends AppCompatActivity {
 
     private Button mBtnRegesterCheck;
 
+
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+    protected int initLayout() {
+        return R.layout.activity_register;
+    }
+
+    @Override
+    protected void initView() {
         //获取输入框内容
         mETUserName = findViewById(R.id.edt_name);
         mETNewUserName = findViewById(R.id.edt_ID);
@@ -34,7 +39,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         //监听按钮事件
         mBtnRegesterCheck = findViewById(R.id.btn_register_check);
+    }
 
+    @Override
+    protected void initData() {
         mETUserName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -104,8 +112,8 @@ public class RegisterActivity extends AppCompatActivity {
         /*****************************************
          TODO 根据获取的内容判断注册是否成功，加入数据库
          如果执行成功执行下面的语句，跳转到登录界面进行登录
-        ******************************************/
-        if(/*注册成功*/) {
+         ******************************************/
+        if(true/*注册成功*/) {
             //登录成功提示
             Toast.makeText(RegisterActivity.this, "注册成功，正在跳转到登录界面", Toast.LENGTH_SHORT).show();
             mBtnRegesterCheck.setOnClickListener(new View.OnClickListener() {
@@ -116,10 +124,6 @@ public class RegisterActivity extends AppCompatActivity {
             });
 
         }
-
-
-
-
 
     }
 }

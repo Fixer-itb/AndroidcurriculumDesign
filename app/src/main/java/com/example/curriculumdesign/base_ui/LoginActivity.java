@@ -13,9 +13,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.curriculumdesign.BaseActivity;
 import com.example.curriculumdesign.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
     private Button mBtnLogin;//登录按钮
     private Button mBtnRegister;//注册按钮
     private EditText mETUserName;//监听用户名
@@ -23,12 +24,22 @@ public class LoginActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    protected int initLayout() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    protected void initView() {
         //获取输入框内容
         mETUserName = findViewById(R.id.edt_userID);
         mETPassword = findViewById(R.id.edt_password_OK);
+        //找到按钮
+        mBtnLogin = findViewById(R.id.btn_login);
+        mBtnRegister = findViewById(R.id.btn_register);
+    }
+
+    @Override
+    protected void initData() {
         //设置监听事件
         mETUserName.addTextChangedListener(new TextWatcher() {
             @Override //输入前
@@ -64,16 +75,14 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        //找到按钮
-        mBtnLogin = findViewById(R.id.btn_login);
-        mBtnRegister = findViewById(R.id.btn_register);
+
         //设置对应的点击事件
         //监听登录按钮
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO 上面获取的输入框的文字对比数据库中的数据
-                if(/*登录成功*/) {
+                if( true/*登录成功*/) {
                     //登录成功提示
                     Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
                     //TODO 跳转到主界面
