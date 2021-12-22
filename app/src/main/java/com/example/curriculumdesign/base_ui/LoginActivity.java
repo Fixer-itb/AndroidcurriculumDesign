@@ -1,15 +1,34 @@
 package com.example.curriculumdesign.base_ui;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.curriculumdesign.activity.BaseActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+
+import com.example.curriculumdesign.MainActivity;
 import com.example.curriculumdesign.R;
+import com.example.curriculumdesign.activity.BaseActivity;
+import com.example.curriculumdesign.activity.HomeActivity;
+import com.example.curriculumdesign.api.Api;
+import com.example.curriculumdesign.api.ApiConfig;
+import com.example.curriculumdesign.api.CallBack;
+import com.example.curriculumdesign.entity.BaseResponse;
+import com.example.curriculumdesign.utils.StringUtils;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+
+import okhttp3.Headers;
+import okhttp3.Response;
 
 public class LoginActivity extends BaseActivity {
     private Button mBtnLogin;//登录按钮
@@ -76,12 +95,9 @@ public class LoginActivity extends BaseActivity {
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 //TODO 上面获取的输入框的文字对比数据库中的数据
-                if( true/*登录成功*/) {
-                    //登录成功提示
-                    Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
-                    //TODO 跳转到主界面
-                }
+                login(mETUserName.getText().toString().trim(),mETPassword.getText().toString().trim());
             }
         });
 
@@ -90,6 +106,43 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+            }
+        });
+    }
+    private void login(String account, String pwd) {
+        if (StringUtils.IsEmpty(account)) {
+            ShowToast("请输入账号");
+            return;
+        }
+        if (StringUtils.IsEmpty(pwd)) {
+            ShowToast("请输入密码");
+            return;
+        }
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("username", account);
+        params.put("password", pwd);
+        Api.config(ApiConfig.LOGIN, params).postRequest1(this,new CallBack() {
+            @Override
+            public void OnSuccess(final String res, Response response) {
+                Log.e("onSuccess", res);
+                Gson gson = new Gson();
+                BaseResponse loginResponse = gson.fromJson(res, BaseResponse.class);
+                if (loginResponse.getCode() == 200) {
+
+                    Headers headers=response.headers();
+                    String token=headers.get("Authorization");
+                    SaveToSP("Authorization",token);
+                    navgateToWithFlag(MainActivity.class,
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    ShowToastAsyn("登录成功");
+                } else {
+                    ShowToastAsyn("登录失败");
+                }
+            }
+
+            @Override
+            public void OnFailure(Exception e) {
+
             }
         });
     }

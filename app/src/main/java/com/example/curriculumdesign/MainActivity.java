@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.example.curriculumdesign.activity.BaseActivity;
 import com.example.curriculumdesign.base_ui.BannerAdapter;
+import com.example.curriculumdesign.base_ui.LoginActivity;
 import com.xuexiang.xui.widget.banner.recycler.BannerLayout;
 
 import com.xuexiang.xui.widget.toast.XToast;
@@ -75,6 +76,7 @@ public class MainActivity extends BaseActivity implements BannerLayout.OnBannerI
 //        });
         //设置 item 点击事件
         mAdapter.setOnBannerItemClickListener(this);
+//        ShowToast(GetStringFromSP("Authorization"));
     }
     @Override
     public void onItemClick(int position) {
