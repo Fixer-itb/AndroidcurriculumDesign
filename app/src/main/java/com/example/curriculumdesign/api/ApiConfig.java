@@ -20,4 +20,9 @@ public class ApiConfig {
     public static final String CLASSLIST= "/class/list";//获取我选的课堂
     public static final String CLASSLISTNYME= "/class/listByMe";//获取我建立的课堂
     public static final String QRCODE= "/images/getQRCodeBase64";//获取一个二维码
+    public static final String MQ_HOST="47.93.33.180";
+    public static final int MQ_PORT=5672;
+    public static final String MQ_USERNAME="guest";
+    public static final String MQ_PASSWORD="guest";
+
 }

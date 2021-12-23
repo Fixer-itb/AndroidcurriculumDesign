@@ -1,7 +1,7 @@
 package com.example.curriculumdesign.activity;
 
 
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.fragment.app.Fragment;
@@ -13,18 +13,19 @@ import com.example.curriculumdesign.api.Api;
 import com.example.curriculumdesign.api.ApiConfig;
 import com.example.curriculumdesign.api.CallBack;
 import com.example.curriculumdesign.entity.BaseResponse;
-import com.example.curriculumdesign.entity.ResponseBody;
 import com.example.curriculumdesign.entity.TabEntity;
-import com.example.curriculumdesign.entity.User;
+import com.example.curriculumdesign.entity.UserResponse;
 import com.example.curriculumdesign.fragment.HomeFragment;
 import com.example.curriculumdesign.fragment.MessageFragment;
 import com.example.curriculumdesign.fragment.MyFragment;
+import com.example.curriculumdesign.service.NotificationService;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import okhttp3.Response;
 
@@ -52,45 +53,13 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        getCurrentUser();
         viewPager = findViewById(R.id.viewpager);
         commonTabLayout = findViewById(R.id.commonTabLayout);
     }
 
-
-
     @Override
     protected void initData() {
-       initTablaout();
-        getUserInfo();
-
-    }
-
-    /**
-     * 获取当前数据
-     */
-    private void getUserInfo(){
-        Api.config(ApiConfig.CURRENT, null).getRequest(this, new CallBack() {
-            @Override
-            public void OnSuccess(String res, Response response) {
-//                Log.e("onSuccess", res);
-                Gson gson = new Gson();
-                ResponseBody body = gson.fromJson(res, ResponseBody.class);
-                SaveToSP("user_info",body.getResult().toString().replaceAll(":", "：")
-                        .replace("/", ""));
-
-            }
-            @Override
-            public void OnFailure(Exception e) {
-                    getUserInfo();
-            }
-        });
-
-    }
-
-    /**
-     * 初始化导航栏
-     */
-    private void initTablaout(){
         mFragments.add(HomeFragment.newInstance());
         mFragments.add(MessageFragment.newInstance());
         mFragments.add(MyFragment.newInstance());
@@ -111,23 +80,39 @@ public class HomeActivity extends BaseActivity {
 
             }
         });
-        viewPager.setOffscreenPageLimit(mFragments.size());
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager(),mTitles,mFragments));
+        Intent intent = new Intent(this, NotificationService.class);
+        startService(intent); //启动监听消息推送的服务
+
+    }
+    void getCurrentUser()
+    {
+        HashMap<String, Object> params = new HashMap<>();
+        Api.config(ApiConfig.CURRENT, params).getRequest(mContext, new CallBack() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void OnSuccess(final String res, Response response) {
+                Log.e("onSuccess", res);
+                Gson gson = new Gson();
+                UserResponse userResponse = gson.fromJson(res, UserResponse.class);
+//                ShowToastAsyn(userResponse.toString());
+                if(userResponse.getCode()==200)
+                {
+                    SaveToSP("username",userResponse.getResult().getUsername());
+                    SaveToSP("userid",String.valueOf(userResponse.getResult().getUserId()));
+                    SaveToSP("roleid",String.valueOf(userResponse.getResult().getRoleId()));
+                }
+                else
+                {
+                    ShowToastAsyn("获取用户数据失败！，请重新登陆！");
+                }
 
             }
 
             @Override
-            public void onPageSelected(int position) {
-                commonTabLayout.setCurrentTab(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
+            public void OnFailure(Exception e) {
+                Log.e("onFailure", e.getMessage());
+                ShowToastAsyn("连接服务器失败！");
             }
         });
-        viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager(),mTitles,mFragments));
     }
 }

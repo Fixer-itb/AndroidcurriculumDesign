@@ -88,14 +88,14 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void insertVal(String key, String val) {
-        SharedPreferences sp = getActivity().getSharedPreferences("sp_ttit", MODE_PRIVATE);
+        SharedPreferences sp = getActivity().getSharedPreferences("sp_znjz", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putString(key, val);
         editor.commit();
     }
 
     protected String findByKey(String key) {
-        SharedPreferences sp = getActivity().getSharedPreferences("sp_ttit", MODE_PRIVATE);
+        SharedPreferences sp = getActivity().getSharedPreferences("sp_znjz", MODE_PRIVATE);
         return sp.getString(key, "");
     }
 
