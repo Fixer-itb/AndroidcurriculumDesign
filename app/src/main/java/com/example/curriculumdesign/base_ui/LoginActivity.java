@@ -18,6 +18,7 @@ import com.example.curriculumdesign.MainActivity;
 import com.example.curriculumdesign.R;
 import com.example.curriculumdesign.activity.BaseActivity;
 import com.example.curriculumdesign.activity.HomeActivity;
+import com.example.curriculumdesign.activity.QrCodeActivity;
 import com.example.curriculumdesign.api.Api;
 import com.example.curriculumdesign.api.ApiConfig;
 import com.example.curriculumdesign.api.CallBack;
@@ -54,6 +55,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        navgateTo(HomeActivity.class);// 调试用
         //设置监听事件
         mETUserName.addTextChangedListener(new TextWatcher() {
             @Override //输入前
