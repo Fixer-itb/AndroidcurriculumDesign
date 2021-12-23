@@ -250,7 +250,18 @@ public class Api {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                final String result = response.body().string();
+                final String result=response.body().string();
+                try {
+                    JSONObject jsonObject=new JSONObject(result);
+                    String message=jsonObject.getString("message");
+                    if(message.equals("请先登录"))
+                    {
+                        Intent in=new Intent(mContext, LoginActivity.class);
+                        mContext.startActivity(in);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 callback.OnSuccess(result,response);
             }
         });
