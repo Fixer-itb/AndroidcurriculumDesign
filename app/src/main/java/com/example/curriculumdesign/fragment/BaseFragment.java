@@ -43,6 +43,8 @@ public abstract class BaseFragment extends Fragment {
         initData();
     }
 
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

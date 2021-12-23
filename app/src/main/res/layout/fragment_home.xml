@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,27 +9,66 @@
     android:background="@color/white"
     tools:context=".fragment.HomeFragment">
 
-    <!--轮播条控件-->
-    <com.xuexiang.xui.widget.banner.recycler.BannerLayout
-        android:id="@+id/bl"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:bl_autoPlaying="true"
-        app:bl_centerScale="1.5"
-        app:bl_interval="1000"
-        app:bl_itemSpace="10dp"
-        app:bl_moveSpeed="1.8" />
+        android:layout_height="115dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <!--        头像和扫码-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60sp"
+            android:paddingLeft="10sp"
+            android:paddingRight="10sp"
+            >
+            <!--            头像按钮-->
+            <ImageView
+                android:id="@+id/img_header"
+                android:layout_width="40sp"
+                android:layout_height="40sp"
+                android:layout_alignParentLeft="true"
+                android:src="@mipmap/header"
+                android:layout_marginTop="10sp"
+                />
+            <!--            二维码按钮-->
+            <ImageView
+                android:id="@+id/codeBtn"
+                android:layout_width="40sp"
+                android:layout_height="40sp"
+                android:layout_marginTop="10sp"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/code"
+
+                />
+        </RelativeLayout>
+
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/slidingTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:background="@color/white"
+            tl:tl_indicator_corner_radius="1.5dp"
+            tl:tl_indicator_height="4sp"
+            tl:tl_indicator_width="30sp"
+            tl:tl_textSelectColor="@color/avatar_overlay_true"
+            tl:tl_textUnselectColor="@color/darkGray"
+            tl:tl_indicator_color="@color/blueText"
+            tl:tl_textBold="SELECT"
+            tl:tl_textsize="20sp" />
 
 
 
+    </LinearLayout>
 
+    <com.example.curriculumdesign.view.FixedViewPager
+        android:id="@+id/fixedViewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
 
-<!--    &lt;!&ndash; TODO: Update blank fragment layout &ndash;&gt;-->
-<!--    <TextView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:text="home"-->
-<!--        android:textColor="@color/black"-->
-<!--        android:textSize="30sp"/>-->
 
 </LinearLayout>

@@ -44,8 +44,20 @@ public class HomeActivity extends BaseActivity {
         commonTabLayout = findViewById(R.id.commonTabLayout);
     }
 
+
+
     @Override
     protected void initData() {
+       initTablaout();
+
+
+
+    }
+
+    /**
+     * 初始化导航栏
+     */
+    private void initTablaout(){
         mFragments.add(HomeFragment.newInstance());
         mFragments.add(MessageFragment.newInstance());
         mFragments.add(MyFragment.newInstance());
@@ -66,14 +78,23 @@ public class HomeActivity extends BaseActivity {
 
             }
         });
+        viewPager.setOffscreenPageLimit(mFragments.size());
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                commonTabLayout.setCurrentTab(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager(),mTitles,mFragments));
-
-
-
-
-
-
-
-
     }
 }
