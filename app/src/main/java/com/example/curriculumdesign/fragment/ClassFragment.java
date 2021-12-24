@@ -98,8 +98,11 @@ public class ClassFragment extends BaseFragment {
 //                res=res.replaceAll(":", "：").replace("/", "");
                     try {
                         pageResponse body = gson.fromJson(res, pageResponse.class);
-                        list= body.getResult().getList();
-                        Log.e("list",list.toString());
+                        if(body.getCode()==200)
+                        {
+                            list= body.getResult().getList();
+                            Log.e("list",list.toString());
+                        }
                     }catch (Exception e){
                         Log.d("error!!!:::",res);
                         for (int i = 0; i <8 ; i++) {
