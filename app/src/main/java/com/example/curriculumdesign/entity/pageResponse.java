@@ -1,24 +1,10 @@
 package com.example.curriculumdesign.entity;
 
 public class pageResponse {
-    @Override
-    public String toString() {
-        return "pageResponse{" +
-                "message='" + message + '\'' +
-                ", code=" + code +
-                ", page=" + page.toString() +
-                '}';
-    }
 
     private String message;
     private int code;
-    private Page page;
-
-    public pageResponse(String message, int code, Page page) {
-        this.message = message;
-        this.code = code;
-        this.page = page;
-    }
+    private Page result;
 
     public String getMessage() {
         return message;
@@ -36,11 +22,11 @@ public class pageResponse {
         this.code = code;
     }
 
-    public Page getPage() {
-        return page;
+    public Page getResult() {
+        return result;
     }
 
-    public void setPage(Page page) {
-        this.page = page;
+    public void setResult(Page result) {
+        this.result = result;
     }
 }

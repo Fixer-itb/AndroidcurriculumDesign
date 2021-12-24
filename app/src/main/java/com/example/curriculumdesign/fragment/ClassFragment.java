@@ -26,6 +26,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.LongFunction;
 
 import okhttp3.Response;
 
@@ -76,6 +77,7 @@ public class ClassFragment extends BaseFragment {
         Api.config(ApiConfig.CLASSLIST,params).getRequest(getActivity(), new CallBack() {
             @Override
             public void OnSuccess(String res, Response response) {
+                Log.e("onsuccess",res);
                 getActivity().runOnUiThread(()->{
                     if (isRefresh){
                         refreshLayout.finishRefresh(true);//关闭下拉刷新
@@ -89,7 +91,8 @@ public class ClassFragment extends BaseFragment {
 //                res=res.replaceAll(":", "：").replace("/", "");
                     try {
                         pageResponse body = gson.fromJson(res, pageResponse.class);
-                        list= body.getPage().getList();
+                        list= body.getResult().getList();
+                        Log.e("list",list.toString());
                     }catch (Exception e){
                         Log.d("error!!!:::",res);
                         for (int i = 0; i <8 ; i++) {
@@ -108,9 +111,9 @@ public class ClassFragment extends BaseFragment {
                     }
                     else{
                         if(isRefresh)
-                            showToastSync("暂时加载无数据");
+                            showToast("暂时加载无数据");
                         else
-                            showToastSync("没有更多数据");
+                            showToast("没有更多数据");
                     }
 
                 });
