@@ -46,7 +46,17 @@ public class ClassEntity implements Serializable {
         this.classContent = classContent;
     }
 
-
+    @Override
+    public String toString() {
+        return "ClassEntity{" +
+                "id=" + id +
+                ", createId=" + createId +
+                ", className='" + className + '\'' +
+                ", classContent='" + classContent + '\'' +
+                ", gmtCreated='" + gmtCreated + '\'' +
+                ", gmtModified='" + gmtModified + '\'' +
+                '}';
+    }
 
     public long getId() {
         return id;

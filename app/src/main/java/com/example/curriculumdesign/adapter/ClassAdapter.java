@@ -6,28 +6,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.VideoView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.curriculumdesign.R;
 import com.example.curriculumdesign.entity.ClassEntity;
-import com.example.curriculumdesign.fragment.ClassFragment;
-import com.squareup.picasso.Picasso;
-
+import java.io.Serializable;
 import java.util.List;
+
 
 public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     private Context mContext;
     private List<ClassEntity> datas;
-
+    private OnItemClickListener mOnItemClickListener;
 
     public ClassAdapter(Context context) {
         this.mContext = context;
 
+    }
+
+
+    public interface OnItemClickListener {
+        void onItemClick(Serializable obj);
+    }
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
     }
 
     public Context getmContext() {
@@ -50,6 +54,7 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_class_layout_new, parent, false);
+
         ViewHolder viewHolder = new ViewHolder(view);
 
 
@@ -70,6 +75,7 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         ClassEntity entity = datas.get(position);
         viewHolder.class_name.setText(entity.getClassName());
         viewHolder.class_content.setText(entity.getClassContent());
+        viewHolder.classEntity=entity;
         //
 //        Picasso.with(mContext).load(entity.getURl).into(viewHolder.class_url);
     }
@@ -82,15 +88,22 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return 0;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private long id;
         private TextView class_name;
         private TextView class_content;
+        private ClassEntity classEntity;
 
         public ViewHolder(@NonNull View view) {
             super(view);
             class_name=view.findViewById(R.id.class_name);
             class_content=view.findViewById(R.id.class_content);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(classEntity);
+                }
+            });
 
         }
 

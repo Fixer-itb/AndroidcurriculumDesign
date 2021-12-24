@@ -33,6 +33,9 @@
             android:name=".activity.HomeActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.ClassDatailActivity"
+            android:exported="false" />
+        <activity
             android:name=".base_ui.LoginActivity"
             android:exported="true">
             <intent-filter>
@@ -41,6 +44,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".MainActivity" />
         <activity android:name=".base_ui.RegisterActivity" />
 

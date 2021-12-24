@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="30sp"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp"
+    >
+
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    >
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sign_name"
+        android:text="2021年12月20日21点12分的签到"
+        android:textSize="15sp"
+        />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2021-12-20T21:03:09.442"
+            android:id="@+id/sign_create_time"
+            android:textSize="8sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="二维码签到"
+            android:id="@+id/sign_type"
+            android:textSize="8sp"
+            />
+    </LinearLayout>
+
+</LinearLayout>
+    
+    <ImageView
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:layout_alignParentRight="true"
+        />
+
+
+</RelativeLayout>
+
+</androidx.cardview.widget.CardView>

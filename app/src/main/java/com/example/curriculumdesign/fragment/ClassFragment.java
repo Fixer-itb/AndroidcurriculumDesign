@@ -1,6 +1,7 @@
 package com.example.curriculumdesign.fragment;
 
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.curriculumdesign.R;
+import com.example.curriculumdesign.activity.ClassDatailActivity;
 import com.example.curriculumdesign.adapter.ClassAdapter;
 import com.example.curriculumdesign.api.Api;
 import com.example.curriculumdesign.api.ApiConfig;
@@ -117,6 +119,16 @@ public class ClassFragment extends BaseFragment {
                             datas.addAll(list);
 
                         adapter.setDatas(datas);
+                        adapter.setOnItemClickListener((obj -> {
+                            showToast("点击");
+                            ClassEntity newsEntity = (ClassEntity) obj;
+                            Log.d("TAG", "initView: "+obj);
+
+//                            Bundle bundle = new Bundle();
+//                            bundle.putString("url","");
+                            navigateTo(ClassDatailActivity.class);
+//                            navigateToWithBundle(ClassDatailActivity.class, bundle);
+                        }));
                         adapter.notifyDataSetChanged();//刷新数据
                     }
                     else{
