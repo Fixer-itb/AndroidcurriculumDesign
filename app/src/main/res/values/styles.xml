@@ -19,5 +19,9 @@
         <item name="android:background">@drawable/tab_menu_bg</item>
         <item name="android:textSize">18sp</item>
     </style>
+    <style name="OnClick">
+        <item name="android:clickable">true</item>
+        <item name="android:onClick">onClick</item>
+    </style>
 
 </resources>
