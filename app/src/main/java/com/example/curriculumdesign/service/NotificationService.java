@@ -1,6 +1,8 @@
 package com.example.curriculumdesign.service;
 
+import android.app.AppOpsManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -18,8 +20,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.example.curriculumdesign.R;
+import com.example.curriculumdesign.base_ui.LoginActivity;
 import com.example.curriculumdesign.receiver.NotifyClickReceiver;
 import com.example.curriculumdesign.utils.ConnectionUtils;
 import com.example.curriculumdesign.utils.SPUtils;
@@ -30,6 +34,8 @@ import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeoutException;
@@ -131,18 +137,33 @@ public class NotificationService extends Service
 
     public void showNotifictionIcon(Context context, String title, String content)
     {
-        NotificationManager manager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-        builder.setAutoCancel(true);//点击后消失
-        builder.setLargeIcon((getBitmap(context)));//设置通知栏消息标题的头像
-        builder.setSmallIcon(R.mipmap.ic_launcher);
-        builder.setDefaults(NotificationCompat.DEFAULT_SOUND);//设置通知铃声
-        builder.setContentTitle(title);//设置标题
-        builder.setContentText(content);//设置内容
-        builder.setPriority(Notification.PRIORITY_DEFAULT); //设置该通知优先级
-        //利用PendingIntent来包装我们的intent对象,使其延迟跳转 设置通知栏点击意图
-        builder.setContentIntent(createIntent(context, title + content));
-        manager.notify(new Random().nextInt(20), builder.build());
+        isNotificationEnabled(context);
+//        NotificationManager manager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+//        builder.setAutoCancel(true);//点击后消失
+//        builder.setLargeIcon((getBitmap(context)));//设置通知栏消息标题的头像
+//        builder.setSmallIcon(R.mipmap.ic_launcher);
+//        builder.setDefaults(NotificationCompat.DEFAULT_SOUND);//设置通知铃声
+//        builder.setContentTitle(title);//设置标题
+//        builder.setContentText(content);//设置内容
+//        builder.setPriority(Notification.PRIORITY_DEFAULT); //设置该通知优先级
+//        //利用PendingIntent来包装我们的intent对象,使其延迟跳转 设置通知栏点击意图
+//        builder.setContentIntent(createIntent(context, title + content));
+//        manager.notify(new Random().nextInt(20), builder.build());
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        String channelId = createNotificationChannel("my_channel_ID", "my_channel_NAME", NotificationManager.IMPORTANCE_HIGH);
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, channelId)
+                .setContentTitle(title)
+                .setContentText(content)
+                .setContentIntent(pendingIntent)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setAutoCancel(true);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(100, notification.build());
+
     }
 
     /**
@@ -165,6 +186,7 @@ public class NotificationService extends Service
      */
     public static Bitmap getBitmap(Context context)
     {
+
         PackageManager packageManager = null;
         ApplicationInfo applicationInfo = null;
         try
@@ -197,5 +219,40 @@ public class NotificationService extends Service
             e.printStackTrace();
         }
         return null;
+    }
+    private String createNotificationChannel(String channelID, String channelNAME, int level) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            NotificationChannel channel = new NotificationChannel(channelID, channelNAME, level);
+            manager.createNotificationChannel(channel);
+            return channelID;
+        } else {
+            return null;
+        }
+    }
+    private boolean isNotificationEnabled(Context context) {
+
+        String CHECK_OP_NO_THROW = "checkOpNoThrow";
+        String OP_POST_NOTIFICATION = "OP_POST_NOTIFICATION";
+
+        AppOpsManager mAppOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+        ApplicationInfo appInfo = context.getApplicationInfo();
+        String pkg = context.getApplicationContext().getPackageName();
+        int uid = appInfo.uid;
+
+        Class appOpsClass = null;
+        try {
+            appOpsClass = Class.forName(AppOpsManager.class.getName());
+            Method checkOpNoThrowMethod = appOpsClass.getMethod(CHECK_OP_NO_THROW, Integer.TYPE, Integer.TYPE,
+                    String.class);
+            Field opPostNotificationValue = appOpsClass.getDeclaredField(OP_POST_NOTIFICATION);
+
+            int value = (Integer) opPostNotificationValue.get(Integer.class);
+            return ((Integer) checkOpNoThrowMethod.invoke(mAppOps, value, uid, pkg) == AppOpsManager.MODE_ALLOWED);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

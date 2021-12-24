@@ -55,7 +55,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        navgateTo(HomeActivity.class);// 调试用
+//        navgateTo(HomeActivity.class);// 调试用
         //设置监听事件
         mETUserName.addTextChangedListener(new TextWatcher() {
             @Override //输入前
