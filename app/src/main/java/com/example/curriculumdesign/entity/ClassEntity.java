@@ -19,15 +19,8 @@ public class ClassEntity implements Serializable {
      * 课程内容
      */
     private String classContent;
-    private LocalDateTime gmtCreated;
-    private LocalDateTime gmtModified;
 
-    public ClassEntity(String className, String classContent) {
-        this.className = className;
-        this.classContent = classContent;
-    }
-
-    public ClassEntity(long id, Long createId, String className, String classContent, LocalDateTime gmtCreated, LocalDateTime gmtModified) {
+    public ClassEntity(long id, Long createId, String className, String classContent, String gmtCreated, String gmtModified) {
         this.id = id;
         this.createId = createId;
         this.className = className;
@@ -35,6 +28,25 @@ public class ClassEntity implements Serializable {
         this.gmtCreated = gmtCreated;
         this.gmtModified = gmtModified;
     }
+
+    private String gmtCreated;
+
+    public void setGmtCreated(String gmtCreated) {
+        this.gmtCreated = gmtCreated;
+    }
+
+    public void setGmtModified(String gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    private String gmtModified;
+
+    public ClassEntity(String className, String classContent) {
+        this.className = className;
+        this.classContent = classContent;
+    }
+
+
 
     public long getId() {
         return id;
@@ -64,23 +76,6 @@ public class ClassEntity implements Serializable {
         return classContent;
     }
 
-    public void setClassContent(String classContent) {
-        this.classContent = classContent;
-    }
 
-    public LocalDateTime getGmtCreated() {
-        return gmtCreated;
-    }
 
-    public void setGmtCreated(LocalDateTime gmtCreated) {
-        this.gmtCreated = gmtCreated;
-    }
-
-    public LocalDateTime getGmtModified() {
-        return gmtModified;
-    }
-
-    public void setGmtModified(LocalDateTime gmtModified) {
-        this.gmtModified = gmtModified;
-    }
 }

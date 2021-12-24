@@ -26,6 +26,7 @@ public class HomeFragment extends BaseFragment  {
     //二维码按钮
     private ImageView CodeBtn;
 
+
     @Override
     protected int initLayout() {
         return R.layout.fragment_home;
@@ -42,12 +43,9 @@ public class HomeFragment extends BaseFragment  {
     protected void initData() {
         CodeBtn.setOnClickListener((View v) -> showToast("点击扫码事件") );
         initTab();
-
-
-
+        showToast("触发");
 
     }
-
 
 
     public static HomeFragment newInstance() {

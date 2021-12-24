@@ -16,6 +16,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.dueeeke.videoplayer.player.VideoViewManager;
+import com.google.gson.Gson;
+
+import java.lang.reflect.Type;
 
 
 /**
@@ -106,4 +109,14 @@ public abstract class BaseFragment extends Fragment {
     protected VideoViewManager getVideoViewManager() {
         return VideoViewManager.instance();
     }
+
+    //根据泛型返回解析制定的类型
+    protected  <T> T fromToJson(String json, Type listType){
+        Gson gson = new Gson();
+        T t = null;
+        t = gson.fromJson(json,listType);
+        return t;
+    }
+
+
 }

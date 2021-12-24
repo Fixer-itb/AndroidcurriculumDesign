@@ -1,20 +1,32 @@
 package com.example.curriculumdesign.activity;
 
 
+import android.content.SharedPreferences;
+import android.util.Log;
+
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.curriculumdesign.R;
 import com.example.curriculumdesign.adapter.MyPagerAdapter;
+import com.example.curriculumdesign.api.Api;
+import com.example.curriculumdesign.api.ApiConfig;
+import com.example.curriculumdesign.api.CallBack;
+import com.example.curriculumdesign.entity.BaseResponse;
+import com.example.curriculumdesign.entity.ResponseBody;
 import com.example.curriculumdesign.entity.TabEntity;
+import com.example.curriculumdesign.entity.User;
 import com.example.curriculumdesign.fragment.HomeFragment;
 import com.example.curriculumdesign.fragment.MessageFragment;
 import com.example.curriculumdesign.fragment.MyFragment;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+
+import okhttp3.Response;
 
 public class HomeActivity extends BaseActivity {
 
@@ -49,8 +61,29 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void initData() {
        initTablaout();
+        getUserInfo();
 
+    }
 
+    /**
+     * 获取当前数据
+     */
+    private void getUserInfo(){
+        Api.config(ApiConfig.CURRENT, null).getRequest(this, new CallBack() {
+            @Override
+            public void OnSuccess(String res, Response response) {
+//                Log.e("onSuccess", res);
+                Gson gson = new Gson();
+                ResponseBody body = gson.fromJson(res, ResponseBody.class);
+                SaveToSP("user_info",body.getResult().toString().replaceAll(":", "：")
+                        .replace("/", ""));
+
+            }
+            @Override
+            public void OnFailure(Exception e) {
+                    getUserInfo();
+            }
+        });
 
     }
 
