@@ -1,6 +1,7 @@
 package com.example.curriculumdesign.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.curriculumdesign.R;
 import com.example.curriculumdesign.entity.ClassEntity;
 import com.example.curriculumdesign.fragment.ClassFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -21,11 +23,26 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private Context mContext;
     private List<ClassEntity> datas;
 
-    public ClassAdapter(Context context, List<ClassEntity> datas) {
+    public ClassAdapter(Context context) {
         this.mContext = context;
-        this.datas = datas;
+
     }
 
+    public Context getmContext() {
+        return mContext;
+    }
+
+    public void setmContext(Context mContext) {
+        this.mContext = mContext;
+    }
+
+    public List<ClassEntity> getDatas() {
+        return datas;
+    }
+
+    public void setDatas(List<ClassEntity> datas) {
+        this.datas = datas;
+    }
 
     @NonNull
     @Override
@@ -36,8 +53,6 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         return viewHolder;
     }
-
-
 
 
 
@@ -53,16 +68,20 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         ClassEntity entity = datas.get(position);
         viewHolder.class_name.setText(entity.getClassName());
         viewHolder.class_content.setText(entity.getClassContent());
-
+        //
+//        Picasso.with(mContext).load(entity.getURl).into(viewHolder.class_url);
     }
 
     @Override
     public int getItemCount() {
+        if (datas!=null&& datas.size()>0)
         return datas.size();
+
+        return 0;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
-
+    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        private long id;
         private TextView class_name;
         private TextView class_content;
 
@@ -73,5 +92,9 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         }
 
+        @Override
+        public void onClick(View v) {
+            Log.d("d", "onClick: ");
+        }
     }
 }

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +20,8 @@ import com.example.curriculumdesign.entity.ResponseBody;
 import com.example.curriculumdesign.entity.pageResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,9 +32,13 @@ import okhttp3.Response;
 public class ClassFragment extends BaseFragment {
 
     private RecyclerView recyclerView;
+    private RefreshLayout refreshLayout;
     private String title;
     private TextView  tv;
     private List<ClassEntity> datas = new ArrayList<>();
+    private int pageNum=1;
+    private ClassAdapter adapter ;
+
 
     @Override
     protected int initLayout() {
@@ -41,13 +48,15 @@ public class ClassFragment extends BaseFragment {
     @Override
     protected void initView() {
 //        tv = mRootView.findViewById(R.id.title);
+        refreshLayout = mRootView.findViewById(R.id.refreshLayout);
+        recyclerView=mRootView.findViewById(R.id.recyclerView);
+        adapter = new ClassAdapter(getActivity());
         initRecyclerView();
-        showToast("触发列表");
-//        getSelectedClass();
-        for (int i = 0; i <8 ; i++) {
-            datas.add(new ClassEntity("深度学习(2021_10_17)","快来选课"));
-        }
-        ClassAdapter adapter = new ClassAdapter(getActivity(),datas);
+//        showToast("触发列表");
+        getSelectedClass(true);
+
+
+
         recyclerView.setAdapter(adapter);
 //        tv.setText(title);
 
@@ -60,30 +69,61 @@ public class ClassFragment extends BaseFragment {
     /**
      * 获取选课列表
      */
-    private void getSelectedClass(){
+    private void getSelectedClass(boolean isRefresh){
         HashMap<String,Object> params = new HashMap<>();
-        params.put("pageNum",1);
-        params.put("pageSize",10);
+        params.put("pageNum",pageNum);
+        params.put("pageSize",ApiConfig.PAGE_SIZE);
         Api.config(ApiConfig.CLASSLIST,params).getRequest(getActivity(), new CallBack() {
             @Override
             public void OnSuccess(String res, Response response) {
-                Gson gson = new Gson();
+                getActivity().runOnUiThread(()->{
+                    if (isRefresh){
+                        refreshLayout.finishRefresh(true);//关闭下拉刷新
+                    }
+                    else
+                    {
+                        refreshLayout.finishLoadMore(true);
+                    }
+                    Gson gson = new Gson();
+                    List<ClassEntity> list = new ArrayList<>();
 //                res=res.replaceAll(":", "：").replace("/", "");
-                pageResponse body = gson.fromJson(res, pageResponse.class);
-                System.out.println(body);
-//                Log.e("onSuccess", body.getPage().getList());
+                    try {
+                        pageResponse body = gson.fromJson(res, pageResponse.class);
+                        list= body.getPage().getList();
+                    }catch (Exception e){
+                        Log.d("error!!!:::",res);
+                        for (int i = 0; i <8 ; i++) {
+                            list.add(new ClassEntity("深度学习(2021_10_17)","快来选课"));
+                        }
+                    }
+                    if (response!=null &&list.size()>0)
+                    {
+                        if(isRefresh)
+                            datas=list;
+                        else
+                            datas.addAll(list);
 
+                        adapter.setDatas(datas);
+                        adapter.notifyDataSetChanged();//刷新数据
+                    }
+                    else{
+                        if(isRefresh)
+                            showToastSync("暂时加载无数据");
+                        else
+                            showToastSync("没有更多数据");
+                    }
 
-//                list = fromToJson(body.getResult().toString(),new TypeToken<List<ClassEntity>>(){}.getType());
-
-//                Page page = gson.fromJson(body.getResult().toString(), Page.class);
-//                System.out.println(page.getList());
+                });
 
             }
 
             @Override
             public void OnFailure(Exception e) {
-                getSelectedClass();
+               if (isRefresh) {
+                    refreshLayout.finishRefresh(true);
+                } else {
+                    refreshLayout.finishLoadMore(true);
+                }
             }
         });
     }
@@ -101,11 +141,22 @@ public class ClassFragment extends BaseFragment {
      * 加载view
      */
     private void initRecyclerView(){
-        recyclerView=mRootView.findViewById(R.id.recyclerView);
+
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
+        refreshLayout.setOnRefreshListener((refreshLayout)->{
+//            refreshLayout.finishRefresh(100);//延时多久关闭动画
+            pageNum=1;
+            getSelectedClass(true);
+        });
+        refreshLayout.setOnLoadMoreListener((refreshLayout)->{
+            pageNum++;
+            getSelectedClass(false);
+        });
+        getSelectedClass(true);
     }
+
 
 
 }

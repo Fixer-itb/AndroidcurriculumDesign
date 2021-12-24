@@ -2,6 +2,7 @@ package com.example.curriculumdesign.fragment;
 
 
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -43,10 +44,9 @@ public class HomeFragment extends BaseFragment  {
     protected void initData() {
         CodeBtn.setOnClickListener((View v) -> showToast("点击扫码事件") );
         initTab();
-        showToast("触发");
+        Log.d("HOME","触发");
 
     }
-
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
