@@ -110,6 +110,12 @@ public class LoginActivity extends BaseActivity {
                 Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
             }
         });
+         String token=GetStringFromSP("Authorization");
+         if(!StringUtils.IsEmpty(token))
+         {
+             navgateToWithFlag(HomeActivity.class,
+                     Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+         }
     }
     private void login(String account, String pwd) {
         if (StringUtils.IsEmpty(account)) {
