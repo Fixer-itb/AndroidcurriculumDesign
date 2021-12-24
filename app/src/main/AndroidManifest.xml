@@ -14,6 +14,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.GpsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.CodeActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.getMsgActivity"
             android:exported="false" />
         <activity
@@ -37,7 +43,9 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".base_ui.RegisterActivity" />
+
         <receiver android:name=".receiver.NotifyClickReceiver" />
+
         <service android:name=".service.NotificationService" />
     </application>
 

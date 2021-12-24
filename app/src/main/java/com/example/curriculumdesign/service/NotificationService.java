@@ -23,6 +23,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.curriculumdesign.R;
+import com.example.curriculumdesign.activity.CodeActivity;
+import com.example.curriculumdesign.activity.GpsActivity;
 import com.example.curriculumdesign.base_ui.LoginActivity;
 import com.example.curriculumdesign.receiver.NotifyClickReceiver;
 import com.example.curriculumdesign.utils.ConnectionUtils;
@@ -150,13 +152,24 @@ public class NotificationService extends Service
 //        //利用PendingIntent来包装我们的intent对象,使其延迟跳转 设置通知栏点击意图
 //        builder.setContentIntent(createIntent(context, title + content));
 //        manager.notify(new Random().nextInt(20), builder.build());
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        String[] msglist=content.split(",");
+        Intent intent;
+        if(msglist[0].equals("0"))
+        {
+            //0为二维码
+            intent = new Intent(this, CodeActivity.class);
+        }
+        else
+        {
+            intent = new Intent(this, GpsActivity.class);
+        }
+        intent.putExtra("signid",msglist[1]);
+        Log.e("id",msglist[1]);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         String channelId = createNotificationChannel("my_channel_ID", "my_channel_NAME", NotificationManager.IMPORTANCE_HIGH);
         NotificationCompat.Builder notification = new NotificationCompat.Builder(this, channelId)
                 .setContentTitle(title)
-                .setContentText(content)
+                .setContentText("有一个签到开始了，快来签到吧！")
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
