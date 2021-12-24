@@ -47,6 +47,13 @@ public class Api {
         mParams=params;
         return api;
     }
+    public static Api codeUrl(String url,HashMap<String,Object> params)
+    {
+        client=new OkHttpClient.Builder().build();
+        requestUrl= url;
+        mParams=params;
+        return api;
+    }
     //不添加令牌的post请求，用于注册和登陆
     public void postRequest1(Context mContext,final CallBack callback)
     {

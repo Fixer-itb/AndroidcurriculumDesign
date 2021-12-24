@@ -10,8 +10,10 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.curriculumdesign.R;
+import com.example.curriculumdesign.activity.QrCodeActivity;
 import com.example.curriculumdesign.adapter.HomeAdapter;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.king.zxing.CaptureActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,9 +44,9 @@ public class HomeFragment extends BaseFragment  {
 
     @Override
     protected void initData() {
-        CodeBtn.setOnClickListener((View v) -> showToast("点击扫码事件") );
+        CodeBtn.setOnClickListener((View v) -> navigateTo(QrCodeActivity.class) );
         initTab();
-        Log.d("HOME","触发");
+
 
     }
 

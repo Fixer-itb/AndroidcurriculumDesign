@@ -17,6 +17,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 
 import com.example.curriculumdesign.R;
+import com.example.curriculumdesign.api.Api;
+import com.example.curriculumdesign.api.ApiConfig;
 import com.google.zxing.Result;
 import com.king.zxing.CameraScan;
 import com.king.zxing.CaptureActivity;
@@ -33,7 +35,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class QrCodeActivity extends BaseActivity{
 
-    private Button mBtnQR;//登录按钮
+
 
     //弹出扫描结果
     private Toast toast;
@@ -65,24 +67,17 @@ public class QrCodeActivity extends BaseActivity{
      */
     @Override
     protected void initView() {
-        mBtnQR = findViewById(R.id.btn_qrcode);
+        cls = CaptureActivity.class;
     }
     /**
      * 加载绑定数据
      */
     @Override
     protected void initData() {
-//       startScan(CaptureActivity.class,(mBtnQR).getText().toString());
-        this.cls = CaptureActivity.class;
-        this.title = mBtnQR.getText().toString();
-        mBtnQR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkCameraPermissions();
-            }
-        });
+        checkCameraPermissions();
 
     }
+
     /**
      * 动态查看权限，判断摄像头是否可用
      */
@@ -112,6 +107,7 @@ public class QrCodeActivity extends BaseActivity{
                 case REQUEST_CODE_SCAN:
                     //返回扫描结果
                     String result = CameraScan.parseScanResult(data);
+//                    Api.codeUrl(result,).postRequest();
 
                     ShowToast(result);
                     break;

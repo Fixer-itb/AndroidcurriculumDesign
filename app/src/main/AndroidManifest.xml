@@ -17,6 +17,13 @@
             android:name=".activity.getMsgActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.QrCodeActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.king.zxing.CaptureActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/CaptureTheme"/>
+        <activity
             android:name=".activity.HomeActivity"
             android:exported="false" />
         <activity
