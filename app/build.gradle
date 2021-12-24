@@ -35,6 +35,7 @@ dependencies {
 
     //二维码
     implementation 'com.github.jenly1314:zxing-lite:2.1.1'
+    implementation "pub.devrel:easypermissions:2.0.1"
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.1.0'
