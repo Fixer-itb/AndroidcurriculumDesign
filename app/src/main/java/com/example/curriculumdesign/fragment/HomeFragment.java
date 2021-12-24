@@ -57,9 +57,10 @@ public class HomeFragment extends BaseFragment  {
      * 初始化导航条
      */
     private void initTab(){
-
+        int i=0;
         for (String title: mTitles) {
-            mFragments.add(ClassFragment.newInstance(title));
+            mFragments.add(ClassFragment.newInstance(i));
+            i++;
         }
         viewPager.setOffscreenPageLimit(mFragments.size());
         viewPager.setAdapter(new HomeAdapter(getFragmentManager(),mTitles,mFragments));

@@ -20,8 +20,10 @@ import java.util.List;
 
 public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+
     private Context mContext;
     private List<ClassEntity> datas;
+
 
     public ClassAdapter(Context context) {
         this.mContext = context;

@@ -50,18 +50,7 @@ public class QrCodeActivity extends BaseActivity{
     public static final int RC_CAMERA = 0X01;
     public static final int RC_READ_PHOTO = 0X02;
 
-    /**
-     * 扫码
-     * @param cls
-     * @param title
-     */
-    private void startScan(Class<?> cls,String title){
-        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeCustomAnimation(this,R.anim.in,R.anim.out);
-        Intent intent = new Intent(this, cls);
-        intent.putExtra(KEY_TITLE,title);
-        intent.putExtra(KEY_IS_CONTINUOUS,isContinuousScan);
-        ActivityCompat.startActivityForResult(this,intent,REQUEST_CODE_SCAN,optionsCompat.toBundle());
-    }
+
 
     /**
      * 启动的界面如 R.layout.activity_home
@@ -94,6 +83,20 @@ public class QrCodeActivity extends BaseActivity{
         });
 
     }
+    /**
+     * 动态查看权限，判断摄像头是否可用
+     */
+    @AfterPermissionGranted(RC_CAMERA)
+    private void checkCameraPermissions(){
+        String[] perms = {Manifest.permission.CAMERA};
+        if (EasyPermissions.hasPermissions(this, perms)) {//有权限
+            startScan(cls,title);
+        } else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(this, getString(R.string.permission_camera),
+                    RC_CAMERA, perms);
+        }
+    }
 
     /**
      * 传递扫描结果
@@ -109,7 +112,8 @@ public class QrCodeActivity extends BaseActivity{
                 case REQUEST_CODE_SCAN:
                     //返回扫描结果
                     String result = CameraScan.parseScanResult(data);
-                    showToast(result);
+
+                    ShowToast(result);
                     break;
                 case REQUEST_CODE_PHOTO:
                     parsePhoto(data);
@@ -118,16 +122,6 @@ public class QrCodeActivity extends BaseActivity{
         }
     }
 
-    //弹出消息
-    private void showToast(String text){
-        if(toast == null){
-            toast = Toast.makeText(this,text,Toast.LENGTH_SHORT);
-        }else{
-            toast.setDuration(Toast.LENGTH_SHORT);
-            toast.setText(text);
-        }
-        toast.show();
-    }
 
     /**
      * 不知道干啥的，开了个线程
@@ -157,20 +151,19 @@ public class QrCodeActivity extends BaseActivity{
         }
     }
 
-    /**
-     * 动态查看权限，判断摄像头是否可用
-     */
-    @AfterPermissionGranted(RC_CAMERA)
-    private void checkCameraPermissions(){
-        String[] perms = {Manifest.permission.CAMERA};
-        if (EasyPermissions.hasPermissions(this, perms)) {//有权限
-            startScan(cls,title);
-        } else {
-            // Do not have permissions, request them now
-            EasyPermissions.requestPermissions(this, getString(R.string.permission_camera),
-                    RC_CAMERA, perms);
-        }
-    }
 
+
+    /**
+     * 扫码
+     * @param cls
+     * @param title
+     */
+    private void startScan(Class<?> cls,String title){
+        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeCustomAnimation(this,R.anim.in,R.anim.out);
+        Intent intent = new Intent(this, cls);
+        intent.putExtra(KEY_TITLE,title);
+        intent.putExtra(KEY_IS_CONTINUOUS,isContinuousScan);
+        ActivityCompat.startActivityForResult(this,intent,REQUEST_CODE_SCAN,optionsCompat.toBundle());
+    }
 
 }

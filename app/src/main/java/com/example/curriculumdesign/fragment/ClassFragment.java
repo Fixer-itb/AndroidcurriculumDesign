@@ -32,6 +32,7 @@ import okhttp3.Response;
 
 public class ClassFragment extends BaseFragment {
 
+    private int categoryId;
     private RecyclerView recyclerView;
     private RefreshLayout refreshLayout;
     private String title;
@@ -52,12 +53,9 @@ public class ClassFragment extends BaseFragment {
         refreshLayout = mRootView.findViewById(R.id.refreshLayout);
         recyclerView=mRootView.findViewById(R.id.recyclerView);
         adapter = new ClassAdapter(getActivity());
+
         initRecyclerView();
-//        showToast("触发列表");
-        getSelectedClass(true);
-
-
-
+        getClass(true,categoryId);
         recyclerView.setAdapter(adapter);
 //        tv.setText(title);
 
@@ -67,14 +65,23 @@ public class ClassFragment extends BaseFragment {
 
     }
 
+
+
     /**
      * 获取选课列表
      */
-    private void getSelectedClass(boolean isRefresh){
+    private void getClass(boolean isRefresh,int type){
+        String url=ApiConfig.CLASSLIST;
+
+        if (type==0)
+            url=ApiConfig.CLASSLIST;
+        else
+            url=ApiConfig.CLASSLISTNYME;
+
         HashMap<String,Object> params = new HashMap<>();
         params.put("pageNum",pageNum);
         params.put("pageSize",ApiConfig.PAGE_SIZE);
-        Api.config(ApiConfig.CLASSLIST,params).getRequest(getActivity(), new CallBack() {
+        Api.config(url,params).getRequest(getActivity(), new CallBack() {
             @Override
             public void OnSuccess(String res, Response response) {
                 Log.e("onsuccess",res);
@@ -134,9 +141,9 @@ public class ClassFragment extends BaseFragment {
 
 
 
-    public static ClassFragment newInstance(String title) {
+    public static ClassFragment newInstance(int categoryId) {
         ClassFragment fragment = new ClassFragment();
-        fragment.title=title;
+        fragment.categoryId=categoryId;
         return fragment;
     }
 
@@ -151,13 +158,13 @@ public class ClassFragment extends BaseFragment {
         refreshLayout.setOnRefreshListener((refreshLayout)->{
 //            refreshLayout.finishRefresh(100);//延时多久关闭动画
             pageNum=1;
-            getSelectedClass(true);
+            getClass(true,categoryId);
         });
         refreshLayout.setOnLoadMoreListener((refreshLayout)->{
             pageNum++;
-            getSelectedClass(false);
+            getClass(false,categoryId);
         });
-        getSelectedClass(true);
+        getClass(true,categoryId);
     }
 
 
