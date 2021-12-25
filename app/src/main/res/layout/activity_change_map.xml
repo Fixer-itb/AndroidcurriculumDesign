@@ -4,26 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.GpsActivity">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="gps签到"
-        >
-
-    </TextView>
+    tools:context=".activity.ChangeMapActivity">
 
     <com.amap.api.maps2d.MapView
+        android:id="@+id/map1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/map"/>
-
-    <Button
-        android:text="签到"
-        android:id="@+id/btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

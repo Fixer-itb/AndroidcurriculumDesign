@@ -13,6 +13,7 @@ import com.example.curriculumdesign.api.Api;
 import com.example.curriculumdesign.api.ApiConfig;
 import com.example.curriculumdesign.api.CallBack;
 import com.example.curriculumdesign.entity.BaseResponse;
+import com.example.curriculumdesign.entity.Gps;
 import com.example.curriculumdesign.entity.TabEntity;
 import com.example.curriculumdesign.entity.UserResponse;
 import com.example.curriculumdesign.fragment.HomeFragment;
@@ -53,6 +54,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        navgateTo(GpsActivity.class);
         getCurrentUser();
         viewPager = findViewById(R.id.viewpager);
         commonTabLayout = findViewById(R.id.commonTabLayout);
