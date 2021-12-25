@@ -25,8 +25,11 @@
             android:id="@+id/iv_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="60sp"
+            android:layout_marginBottom="20sp"
+
             app:srcCompat="@drawable/ic_logo" />
+
     </LinearLayout>
 
     <RelativeLayout

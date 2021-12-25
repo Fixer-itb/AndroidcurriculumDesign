@@ -88,7 +88,7 @@ public class ClassFragment extends BaseFragment {
         Api.config(url,params).getRequest(getActivity(), new CallBack() {
             @Override
             public void OnSuccess(String res, Response response) {
-                Log.e("onsuccess",res);
+//                Log.e("onsuccess",res);
                 getActivity().runOnUiThread(()->{
                     if (isRefresh){
                         refreshLayout.finishRefresh(true);//关闭下拉刷新
@@ -99,7 +99,6 @@ public class ClassFragment extends BaseFragment {
                     }
                     Gson gson = new Gson();
                     List<ClassEntity> list = new ArrayList<>();
-//                res=res.replaceAll(":", "：").replace("/", "");
                     try {
                         pageResponse body = gson.fromJson(res, pageResponse.class);
                         if(body.getCode()==200)
@@ -107,7 +106,7 @@ public class ClassFragment extends BaseFragment {
                             list= body.getResult().getList();
                         }
                     }catch (Exception e){
-                        Log.d("error!!!:::",res);
+//                        Log.d("error!!!:::",res);
                         for (int i = 0; i <8 ; i++) {
                             list.add(new ClassEntity("深度学习(2021_10_17)","快来选课"));
                         }

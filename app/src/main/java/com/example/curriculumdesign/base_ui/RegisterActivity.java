@@ -143,7 +143,7 @@ public class RegisterActivity extends BaseActivity {
         params.put("password", pwd);
         params.put("avatarUrl","111");
         params.put("phone","111111");
-        params.put("roleId",0);
+        params.put("roleId",1);
         Api.config(ApiConfig.REGISTER, params).postRequest1(this,new CallBack() {
             @Override
             public void OnSuccess(final String res, Response response) {

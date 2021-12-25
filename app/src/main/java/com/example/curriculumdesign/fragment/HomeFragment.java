@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 
 
+
 public class HomeFragment extends BaseFragment  {
 
     private ArrayList<Fragment> mFragments = new ArrayList<>();
@@ -81,7 +82,9 @@ public class HomeFragment extends BaseFragment  {
 
     private Boolean haveAuth(){
         TblUser user = sp.getUserFromSP(mRootView.getContext());
-        if (user.getRoleId()==0  || user.getRoleId()==2){
+        if (user==null)
+            return false;
+        if (user!=null && user.getRoleId()==0 || user.getRoleId()==2){
             return true;
         }
         else

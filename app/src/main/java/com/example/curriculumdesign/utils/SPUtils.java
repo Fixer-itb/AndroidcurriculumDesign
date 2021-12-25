@@ -104,4 +104,10 @@ public class SPUtils {
         }
         return user;
     }
+
+    public void clear(Context context){
+        SharedPreferences sp = context.getSharedPreferences(FILE_NAME,
+                Context.MODE_PRIVATE);
+        sp.edit().clear().commit();
+    }
 }

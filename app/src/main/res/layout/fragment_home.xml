@@ -70,14 +70,7 @@
                 android:textSize="15sp"
                 android:visibility="invisible"
                 />
-
-
-
         </RelativeLayout>
-
-
-
-
     </LinearLayout>
 
     <com.example.curriculumdesign.view.FixedViewPager

@@ -1,19 +1,19 @@
 package com.example.curriculumdesign.adapter;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
+
 import java.util.ArrayList;
 
-/**
- * sd
- */
-public class HomeAdapter extends FragmentPagerAdapter {
+public class StuAdapter extends FragmentPagerAdapter {
+
+
 
     private String[] mTitles;
     private ArrayList<Fragment> mFragments;
 
-    public HomeAdapter(FragmentManager fm, String[] titles, ArrayList<Fragment> fragments) {
+    public StuAdapter(FragmentManager fm, String[] titles, ArrayList<Fragment> fragments) {
         super(fm);
         this.mTitles = titles;
         this.mFragments = fragments;

@@ -89,15 +89,11 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-
-
-
         //设置对应的点击事件
         //监听登录按钮
         mBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //TODO 上面获取的输入框的文字对比数据库中的数据
                 login(mETUserName.getText().toString().trim(),mETPassword.getText().toString().trim());
             }
@@ -107,10 +103,12 @@ public class LoginActivity extends BaseActivity {
         mBtnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
+                navgateTo(RegisterActivity.class);
+
             }
         });
          String token=GetStringFromSP("Authorization");
+//        Log.d("name", "initData: "+token);
          if(!StringUtils.IsEmpty(token))
          {
              navgateToWithFlag(HomeActivity.class,
@@ -132,7 +130,7 @@ public class LoginActivity extends BaseActivity {
         Api.config(ApiConfig.LOGIN, params).postRequest1(this,new CallBack() {
             @Override
             public void OnSuccess(final String res, Response response) {
-                Log.e("onSuccess", res);
+//                Log.e("onSuccess", res);
                 Gson gson = new Gson();
                 BaseResponse loginResponse = gson.fromJson(res, BaseResponse.class);
                 if (loginResponse.getCode() == 200) {

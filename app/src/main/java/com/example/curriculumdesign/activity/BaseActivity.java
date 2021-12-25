@@ -9,27 +9,34 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.curriculumdesign.entity.TblUser;
+import com.example.curriculumdesign.utils.SPUtils;
 import com.google.gson.Gson;
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends FragmentActivity {
 
     public Context mContext;
     public Bundle bundle;
     public TblUser currentUser;
     Gson gson = new Gson();
+    public SPUtils sp =new SPUtils();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext=this;
         bundle=getIntent().getExtras();
-        currentUser=getUserFromSP();
+        currentUser=sp.getUserFromSP(mContext);
         setContentView(initLayout());
         initView();
         initData();
+    }
+    public void navigateToWithBundle(Class cls, Bundle bundle) {
+        Intent in = new Intent(mContext, cls);
+        in.putExtras(bundle);
+        startActivity(in);
     }
 
     /**
@@ -110,6 +117,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
+    public Boolean haveAuth(){
+        TblUser user = sp.getUserFromSP(this);
+        if (user.getRoleId()==0  || (user.getRoleId()==2)){
+            return true;
+        }
+        else
+            return false;
+    }
 
 
 }

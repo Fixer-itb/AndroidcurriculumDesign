@@ -44,8 +44,9 @@ public class MyFragment extends BaseFragment {
             case R.id.img_header:
                 break;
             case R.id.btn_logout:
+                sp.clear(mRootView.getContext());
                 removeByKey("Authorization");
-
+                removeByKey("user_info");
                 navigateToWithFlag(LoginActivity.class,
                         Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 showToast("退出登录");

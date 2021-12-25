@@ -81,6 +81,22 @@ public class HomeActivity extends BaseActivity {
 
             }
         });
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                commonTabLayout.setCurrentTab(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         viewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager(),mTitles,mFragments));
         Intent intent = new Intent(this, NotificationService.class);
         startService(intent); //启动监听消息推送的服务
@@ -92,7 +108,7 @@ public class HomeActivity extends BaseActivity {
         Api.config(ApiConfig.CURRENT, params).getRequest(mContext, new CallBack() {
             @Override
             public void OnSuccess(final String res, Response response) {
-                Log.e("onSuccess", res);
+//                Log.e("onSuccess", res);
                 Gson gson = new Gson();
                 UserResponse userResponse = gson.fromJson(res, UserResponse.class);
 //                ShowToastAsyn(userResponse.toString());
@@ -113,7 +129,7 @@ public class HomeActivity extends BaseActivity {
 
             @Override
             public void OnFailure(Exception e) {
-                Log.e("onFailure", e.getMessage());
+//                Log.e("onFailure", e.getMessage());
                 ShowToastAsyn("连接服务器失败！");
             }
         });

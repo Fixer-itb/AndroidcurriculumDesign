@@ -2,12 +2,15 @@ package com.example.curriculumdesign.activity;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.curriculumdesign.R;
 import com.example.curriculumdesign.adapter.SignAdapter_stu;
+import com.example.curriculumdesign.adapter.SignAdapter_tea;
 import com.example.curriculumdesign.entity.ClassEntity;
 import com.example.curriculumdesign.entity.SignEntity;
 import com.example.curriculumdesign.entity.TblUser;
@@ -29,6 +32,8 @@ public class ClassDatailActivity extends BaseActivity {
      * 学生适配器
      */
     private SignAdapter_stu adapter_stu;
+    private SignAdapter_tea adapter_tea;
+
 
     private List<SignEntity> list = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
@@ -49,38 +54,43 @@ public class ClassDatailActivity extends BaseActivity {
         class_detail_title=findViewById(R.id.class_detail_title);
         class_detail_content=findViewById(R.id.class_detail_content);
         adapter_stu=new SignAdapter_stu(mContext);
+        adapter_tea=new SignAdapter_tea(mContext);
     }
 
     @Override
     protected void initData() {
-
-
         //返回
         btnBack.setOnClickListener((v -> {
             finish();
         }));
-        sign_btn.setOnClickListener(v -> {
-            ShowToast("发起签到");
-        });
+        if(haveAuth()){
+            sign_btn.setOnClickListener(v -> {
+                ShowToast("发起签到");
+            });
+        }
         class_detail_title.setText(currentClass.getClassName());
         class_detail_content.setText(currentClass.getClassContent());
         initRecyclerView();
         for (int i = 0; i <8 ; i++) {
             list.add(new SignEntity("2021-12-25","2021年12月20日21点12分的签到",0));
         }
-        adapter_stu.setDatas(list);
-        adapter_stu.setOnItemClickListener((obj)->{
-            SignEntity entity=(SignEntity) obj;
-            Log.d("ddd", "initData: "+entity);
-        });
-//        adapter.setOnItemClickListener((obj -> {
-//            ClassEntity newsEntity = (ClassEntity) obj;
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable("class",obj);
-//            navigateToWithBundle(ClassDatailActivity.class, bundle);
-//        }));
-        recyclerView.setAdapter(adapter_stu);
-        
+        if (haveAuth()){
+            adapter_tea.setDatas(list);
+            adapter_tea.setOnItemClickListener((obj)->{
+                SignEntity entity=(SignEntity) obj;
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("sign",obj);
+                navigateToWithBundle(SignDetailActivity.class,bundle);
+            });
+            recyclerView.setAdapter(adapter_tea);
+        }
+        else{
+            adapter_stu.setDatas(list);
+            adapter_stu.setOnItemClickListener((obj)->{
+                SignEntity entity=(SignEntity) obj;
+            });
+            recyclerView.setAdapter(adapter_stu);
+        }
         ShowToast(currentUser.getPassword());
     }
 
@@ -93,6 +103,14 @@ public class ClassDatailActivity extends BaseActivity {
         recyclerView.setLayoutManager(manager);
     }
 
+    public Boolean haveAuth(){
+        TblUser user = sp.getUserFromSP(this);
+        if (user.getRoleId()==0  || (user.getRoleId()==2&&currentUser.getUserId().equals(currentClass.getCreateId()))){
+            return true;
+        }
+        else
+        return false;
+    }
 
 
 }
