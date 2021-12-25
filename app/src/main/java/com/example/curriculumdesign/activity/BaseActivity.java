@@ -5,18 +5,28 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.curriculumdesign.entity.TblUser;
+import com.google.gson.Gson;
+
 public abstract class BaseActivity extends AppCompatActivity {
 
     public Context mContext;
+    public Bundle bundle;
+    public TblUser currentUser;
+    Gson gson = new Gson();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext=this;
+        bundle=getIntent().getExtras();
+        currentUser=getUserFromSP();
         setContentView(initLayout());
         initView();
         initData();
@@ -73,4 +83,33 @@ public abstract class BaseActivity extends AppCompatActivity {
         SharedPreferences sp= getSharedPreferences("sp_znjz", MODE_PRIVATE);
         return sp.getString(key,"");
     }
+
+    protected TblUser getUserFromSP()
+    {
+        SharedPreferences sp= getSharedPreferences("sp_znjz", MODE_PRIVATE);
+        String user_if = sp.getString("user_if", "");
+
+        TblUser user=null;
+        try {
+            user = gson.fromJson(user_if, TblUser.class);
+        }catch (Exception e ){
+            Log.e("", "GetUserFromSP: 无法错误 " );
+        }
+        return user;
+    }
+
+    protected void setUserToSP(TblUser user)
+    {
+        SharedPreferences sp=getSharedPreferences("sp_znjz",MODE_PRIVATE);
+        SharedPreferences.Editor editor=sp.edit();
+        try {
+            String json = gson.toJson(user);
+            editor.putString("user_if",json);
+            editor.commit();
+        }catch (Exception e){ }
+
+    }
+
+
+
 }

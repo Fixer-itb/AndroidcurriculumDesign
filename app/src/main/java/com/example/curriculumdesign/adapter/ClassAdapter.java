@@ -23,7 +23,6 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     public ClassAdapter(Context context) {
         this.mContext = context;
-
     }
 
 
@@ -34,13 +33,6 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mOnItemClickListener = onItemClickListener;
     }
 
-    public Context getmContext() {
-        return mContext;
-    }
-
-    public void setmContext(Context mContext) {
-        this.mContext = mContext;
-    }
 
     public List<ClassEntity> getDatas() {
         return datas;
@@ -54,10 +46,7 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_class_layout_new, parent, false);
-
         ViewHolder viewHolder = new ViewHolder(view);
-
-
         return viewHolder;
     }
 
@@ -84,11 +73,10 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public int getItemCount() {
         if (datas!=null&& datas.size()>0)
         return datas.size();
-
         return 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private long id;
         private TextView class_name;
         private TextView class_content;
@@ -105,11 +93,6 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 }
             });
 
-        }
-
-        @Override
-        public void onClick(View v) {
-            Log.d("d", "onClick: ");
         }
     }
 }

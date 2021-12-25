@@ -190,43 +190,24 @@
                 android:layout_marginRight="15dp"
                 android:background="#EEEEEE" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:id="@+id/btn_logout"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="360dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/bg_btn_color_c"
-                    android:text="退出登录"
-                    android:textColor="@color/red"
-                    android:textSize="@dimen/text_size_16" />
-            </LinearLayout>>
-
         </LinearLayout>
     </LinearLayout>
 
-    <!--    <RelativeLayout-->
-    <!--        android:id="@+id/rl_logout"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="50dp"-->
-    <!--        android:layout_alignParentBottom="true"-->
-    <!--        android:layout_marginLeft="30dp"-->
-    <!--        android:layout_marginRight="30dp"-->
-    <!--        android:layout_marginBottom="20dp"-->
-    <!--        android:background="@drawable/shape_my_logout_bg">-->
-
-    <!--        <TextView-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_centerInParent="true"-->
-    <!--            android:text="退出登录"-->
-    <!--            android:textColor="@color/skin_text_white"-->
-    <!--            android:textSize="18sp" />-->
-    <!--    </RelativeLayout>-->
+        <RelativeLayout
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/shape_my_logout_bg">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="退出登录"
+                android:textColor="@color/skin_text_white"
+                android:textSize="18sp" />
+        </RelativeLayout>
 </RelativeLayout>

@@ -4,6 +4,7 @@ package com.example.curriculumdesign.fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,7 @@ import com.example.curriculumdesign.api.CallBack;
 import com.example.curriculumdesign.entity.ClassEntity;
 import com.example.curriculumdesign.entity.Page;
 import com.example.curriculumdesign.entity.ResponseBody;
+import com.example.curriculumdesign.entity.TblUser;
 import com.example.curriculumdesign.entity.pageResponse;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -51,7 +53,7 @@ public class ClassFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-//        tv = mRootView.findViewById(R.id.title);
+
         refreshLayout = mRootView.findViewById(R.id.refreshLayout);
         recyclerView=mRootView.findViewById(R.id.recyclerView);
         adapter = new ClassAdapter(getActivity());
@@ -74,7 +76,6 @@ public class ClassFragment extends BaseFragment {
      */
     private void getClass(boolean isRefresh,int type){
         String url=ApiConfig.CLASSLIST;
-
         if (type==0)
             url=ApiConfig.CLASSLIST;
         else
@@ -83,6 +84,7 @@ public class ClassFragment extends BaseFragment {
         HashMap<String,Object> params = new HashMap<>();
         params.put("pageNum",pageNum);
         params.put("pageSize",ApiConfig.PAGE_SIZE);
+
         Api.config(url,params).getRequest(getActivity(), new CallBack() {
             @Override
             public void OnSuccess(String res, Response response) {
@@ -103,7 +105,6 @@ public class ClassFragment extends BaseFragment {
                         if(body.getCode()==200)
                         {
                             list= body.getResult().getList();
-                            Log.e("list",list.toString());
                         }
                     }catch (Exception e){
                         Log.d("error!!!:::",res);
@@ -120,14 +121,10 @@ public class ClassFragment extends BaseFragment {
 
                         adapter.setDatas(datas);
                         adapter.setOnItemClickListener((obj -> {
-                            showToast("点击");
                             ClassEntity newsEntity = (ClassEntity) obj;
-                            Log.d("TAG", "initView: "+obj);
-
-//                            Bundle bundle = new Bundle();
-//                            bundle.putString("url","");
-                            navigateTo(ClassDatailActivity.class);
-//                            navigateToWithBundle(ClassDatailActivity.class, bundle);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("class",obj);
+                            navigateToWithBundle(ClassDatailActivity.class, bundle);
                         }));
                         adapter.notifyDataSetChanged();//刷新数据
                     }
@@ -156,6 +153,7 @@ public class ClassFragment extends BaseFragment {
 
 
 
+
     public static ClassFragment newInstance(int categoryId) {
         ClassFragment fragment = new ClassFragment();
         fragment.categoryId=categoryId;
@@ -166,7 +164,6 @@ public class ClassFragment extends BaseFragment {
      * 加载view
      */
     private void initRecyclerView(){
-
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
@@ -181,7 +178,4 @@ public class ClassFragment extends BaseFragment {
         });
         getClass(true,categoryId);
     }
-
-
-
 }

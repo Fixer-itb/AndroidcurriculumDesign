@@ -44,20 +44,37 @@
                 />
         </RelativeLayout>
 
-
-        <com.flyco.tablayout.SlidingTabLayout
-            android:id="@+id/slidingTabLayout"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50sp"
-            android:background="@color/white"
-            tl:tl_indicator_corner_radius="1.5dp"
-            tl:tl_indicator_height="4sp"
-            tl:tl_indicator_width="30sp"
-            tl:tl_textSelectColor="@color/avatar_overlay_true"
-            tl:tl_textUnselectColor="@color/darkGray"
-            tl:tl_indicator_color="@color/blueText"
-            tl:tl_textBold="SELECT"
-            tl:tl_textsize="20sp" />
+            android:layout_height="match_parent">
+            <com.flyco.tablayout.SlidingTabLayout
+                android:id="@+id/slidingTabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:background="@color/white"
+                tl:tl_indicator_corner_radius="1.5dp"
+                tl:tl_indicator_height="4sp"
+                tl:tl_indicator_width="30sp"
+                tl:tl_textSelectColor="@color/avatar_overlay_true"
+                tl:tl_textUnselectColor="@color/darkGray"
+                tl:tl_indicator_color="@color/blueText"
+                tl:tl_textBold="SELECT"
+                tl:tl_textsize="20sp" />
+            <Button
+                android:id="@+id/new_class_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10sp"
+                android:layout_alignParentRight="true"
+                android:text="创建课堂"
+                android:textSize="15sp"
+                android:visibility="invisible"
+                />
+
+
+
+        </RelativeLayout>
+
 
 
 

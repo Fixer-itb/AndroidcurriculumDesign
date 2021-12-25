@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 import com.dueeeke.videoplayer.player.VideoViewManager;
+import com.example.curriculumdesign.entity.TblUser;
+import com.example.curriculumdesign.utils.SPUtils;
 import com.google.gson.Gson;
 
 
@@ -32,6 +35,8 @@ import java.lang.reflect.Type;
 public abstract class BaseFragment extends Fragment {
     protected View mRootView;
     private Unbinder unbinder;
+    public SPUtils sp=new SPUtils();
+
 
     @Nullable
     @Override
@@ -121,6 +126,7 @@ public abstract class BaseFragment extends Fragment {
         t = gson.fromJson(json,listType);
         return t;
     }
+
 
 
 }

@@ -20,7 +20,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/sign_name"
+        android:id="@+id/sign_stu_name"
         android:text="2021年12月20日21点12分的签到"
         android:textSize="15sp"
         />
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2021-12-20T21:03:09.442"
-            android:id="@+id/sign_create_time"
+            android:id="@+id/sign_stu_create_time"
             android:textSize="8sp"
             />
         <TextView

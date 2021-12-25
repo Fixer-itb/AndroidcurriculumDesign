@@ -4,6 +4,7 @@ package com.example.curriculumdesign.fragment;
 
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
@@ -12,11 +13,10 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.curriculumdesign.R;
 import com.example.curriculumdesign.activity.QrCodeActivity;
 import com.example.curriculumdesign.adapter.HomeAdapter;
+import com.example.curriculumdesign.entity.TblUser;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.king.zxing.CaptureActivity;
-
 import java.util.ArrayList;
-import java.util.Arrays;
+
 
 
 public class HomeFragment extends BaseFragment  {
@@ -29,6 +29,7 @@ public class HomeFragment extends BaseFragment  {
     //二维码按钮
     private ImageView CodeBtn;
 
+    private Button newClassBtn;
 
     @Override
     protected int initLayout() {
@@ -37,6 +38,13 @@ public class HomeFragment extends BaseFragment  {
 
     @Override
     protected void initView() {
+        newClassBtn=mRootView.findViewById(R.id.new_class_btn);
+//        tv = mRootView.findViewById(R.id.title);
+        if (haveAuth())
+        {
+            newClassBtn.setVisibility(View.VISIBLE);
+            newClassBtn.setOnClickListener((v -> { showToast("新建课程"); }));
+        }
     CodeBtn=mRootView.findViewById(R.id.codeBtn);
     viewPager=mRootView.findViewById(R.id.fixedViewpager);
     slidingTabLayout=mRootView.findViewById(R.id.slidingTabLayout);
@@ -71,7 +79,14 @@ public class HomeFragment extends BaseFragment  {
 
 
 
-
+    private Boolean haveAuth(){
+        TblUser user = sp.getUserFromSP(mRootView.getContext());
+        if (user.getRoleId()==0  || user.getRoleId()==2){
+            return true;
+        }
+        else
+            return false;
+    }
 
 
 

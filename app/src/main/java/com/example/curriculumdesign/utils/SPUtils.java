@@ -1,7 +1,13 @@
 package com.example.curriculumdesign.utils;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
+
+import com.example.curriculumdesign.entity.TblUser;
+import com.google.gson.Gson;
 
 /**
  * SharedPreferences的一个工具类。 调用setParam就能保存String, Integer, Boolean, Float,
@@ -82,5 +88,20 @@ public class SPUtils {
         }
 
         return null;
+    }
+
+    public TblUser getUserFromSP(Context context)
+    {
+        SharedPreferences sp = context.getSharedPreferences(FILE_NAME,
+                Context.MODE_PRIVATE);
+        String user_if = sp.getString("user_if", "");
+
+        TblUser user=null;
+        try {
+            user = new Gson().fromJson(user_if, TblUser.class);
+        }catch (Exception e ){
+            Log.e("", "GetUserFromSP: 无法错误 " );
+        }
+        return user;
     }
 }

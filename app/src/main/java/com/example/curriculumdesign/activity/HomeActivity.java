@@ -98,10 +98,11 @@ public class HomeActivity extends BaseActivity {
 //                ShowToastAsyn(userResponse.toString());
                 if(userResponse.getCode()==200)
                 {
-                    SaveToSP("username",userResponse.getResult().getUsername());
-                    SaveToSP("userid",String.valueOf(userResponse.getResult().getUserId()));
-                    SaveToSP("roleid",String.valueOf(userResponse.getResult().getRoleId()));
-                    SaveToSP("avatarurl",String.valueOf(userResponse.getResult().getAvatarUrl()));
+                    setUserToSP(userResponse.getResult());
+//                    SaveToSP("username",userResponse.getResult().getUsername());
+//                    SaveToSP("userid",String.valueOf(userResponse.getResult().getUserId()));
+//                    SaveToSP("roleid",String.valueOf(userResponse.getResult().getRoleId()));
+//                    SaveToSP("avatarurl",String.valueOf(userResponse.getResult().getAvatarUrl()));
                 }
                 else
                 {

@@ -14,6 +14,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.SignDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.GpsActivity"
             android:exported="false" />
         <activity
@@ -28,7 +31,7 @@
         <activity
             android:name="com.king.zxing.CaptureActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/CaptureTheme"/>
+            android:theme="@style/CaptureTheme" />
         <activity
             android:name=".activity.HomeActivity"
             android:exported="false" />
@@ -44,7 +47,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".MainActivity" />
         <activity android:name=".base_ui.RegisterActivity" />
 
