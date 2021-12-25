@@ -10,6 +10,8 @@
 <!--    <color name="white">#FFFFFFFF</color>-->
     <!--============不可直接使用的静态资源==========-->
 
+    <color name="skin_text_white">#ffffff</color>
+    <color name="skin_topbar_bg_color">#344261</color>
     <color name="black">#FF333333</color>
     <color name="color_4E5BCD">#4E5BCD</color>
     <color name="color_ffffff">#ffffff</color>

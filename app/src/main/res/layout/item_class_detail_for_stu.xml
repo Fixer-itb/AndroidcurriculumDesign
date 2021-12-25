@@ -45,12 +45,11 @@
     </LinearLayout>
 
 </LinearLayout>
-    
+
     <ImageView
         android:layout_width="60sp"
         android:layout_height="60sp"
-        android:layout_alignParentRight="true"
-        />
+        android:layout_alignParentRight="true" />
 
 
 </RelativeLayout>
