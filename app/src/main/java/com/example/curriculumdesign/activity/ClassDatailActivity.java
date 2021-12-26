@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.curriculumdesign.R;
+import com.example.curriculumdesign.SigninActivity;
 import com.example.curriculumdesign.adapter.SignAdapter_stu;
 import com.example.curriculumdesign.adapter.SignAdapter_tea;
 import com.example.curriculumdesign.entity.ClassEntity;
@@ -65,7 +66,8 @@ public class ClassDatailActivity extends BaseActivity {
         }));
         if(haveAuth()){
             sign_btn.setOnClickListener(v -> {
-                ShowToast("发起签到");
+//                ShowToast("发起签到");
+                navgateTo(SigninActivity.class);
             });
         }
         class_detail_title.setText(currentClass.getClassName());

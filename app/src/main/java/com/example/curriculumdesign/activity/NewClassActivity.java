@@ -36,7 +36,8 @@ public class NewClassActivity extends BaseActivity {
         ivBackup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navgateTo(LoginActivity.class);
+//                navgateTo(LoginActivity.class);
+                finish();
             }
         });
         //获取课程名称
@@ -77,7 +78,8 @@ public class NewClassActivity extends BaseActivity {
         btnCreateClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navgateTo(LoginActivity.class);
+                finish();
+//                navgateTo(LoginActivity.class);
             }
         });
 

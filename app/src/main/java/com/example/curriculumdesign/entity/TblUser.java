@@ -1,7 +1,7 @@
 package com.example.curriculumdesign.entity;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+
 
 public class TblUser implements Serializable {
 
@@ -41,6 +41,9 @@ public class TblUser implements Serializable {
 
     private String gmtModified;
 
+    public TblUser(String username) {
+        this.username = username;
+    }
 
     public Long getUserId() {
         return userId;

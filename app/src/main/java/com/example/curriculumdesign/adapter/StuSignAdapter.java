@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.curriculumdesign.R;
 import com.example.curriculumdesign.entity.ClassEntity;
+import com.example.curriculumdesign.entity.TblUser;
+import com.example.curriculumdesign.entity.TblUserSign;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,7 +20,7 @@ import java.util.List;
 public class StuSignAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private Context mContext;
-    private List<ClassEntity> datas;
+    private List<TblUser> datas;
     private StuSignAdapter.OnItemClickListener mOnItemClickListener;
 
     public StuSignAdapter(Context context) {
@@ -34,18 +36,18 @@ public class StuSignAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
 
-    public List<ClassEntity> getDatas() {
+    public List<TblUser> getDatas() {
         return datas;
     }
 
-    public void setDatas(List<ClassEntity> datas) {
+    public void setDatas(List<TblUser> datas) {
         this.datas = datas;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_class_layout_new, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_sign_stu, parent, false);
         StuSignAdapter.ViewHolder viewHolder = new StuSignAdapter.ViewHolder(view);
         return viewHolder;
     }
@@ -59,10 +61,9 @@ public class StuSignAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         StuSignAdapter.ViewHolder viewHolder=(StuSignAdapter.ViewHolder)holder;
-        ClassEntity entity = datas.get(position);
-        viewHolder.class_name.setText(entity.getClassName());
-        viewHolder.class_content.setText(entity.getClassContent());
-        viewHolder.classEntity=entity;
+        TblUser entity = datas.get(position);
+        viewHolder.Stu_name.setText(entity.getUsername());
+        viewHolder.entity=entity;
         //
 //        Picasso.with(mContext).load(entity.getURl).into(viewHolder.class_url);
     }
@@ -76,20 +77,19 @@ public class StuSignAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private long id;
-        private TextView class_name;
-        private TextView class_content;
-        private ClassEntity classEntity;
+        private TextView Stu_name;
+        private TblUser entity;
 
         public ViewHolder(@NonNull View view) {
             super(view);
-            class_name=view.findViewById(R.id.class_name);
-            class_content=view.findViewById(R.id.class_content);
-//            view.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    mOnItemClickListener.onItemClick(classEntity);
-//                }
-//            });
+            Stu_name=view.findViewById(R.id.class_name);
+//            class_content=view.findViewById(R.id.class_content);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(entity);
+                }
+            });
 
         }
     }

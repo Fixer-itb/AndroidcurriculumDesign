@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.curriculumdesign.R;
+import com.example.curriculumdesign.activity.NewClassActivity;
 import com.example.curriculumdesign.activity.QrCodeActivity;
 import com.example.curriculumdesign.adapter.HomeAdapter;
 import com.example.curriculumdesign.entity.TblUser;
@@ -44,7 +45,10 @@ public class HomeFragment extends BaseFragment  {
         if (haveAuth())
         {
             newClassBtn.setVisibility(View.VISIBLE);
-            newClassBtn.setOnClickListener((v -> { showToast("新建课程"); }));
+            newClassBtn.setOnClickListener((v -> {
+                navigateTo(NewClassActivity.class);
+//                showToast("新建课程");
+            }));
         }
     CodeBtn=mRootView.findViewById(R.id.codeBtn);
     viewPager=mRootView.findViewById(R.id.fixedViewpager);

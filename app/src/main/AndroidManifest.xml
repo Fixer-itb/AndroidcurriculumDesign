@@ -24,6 +24,10 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.NewClassActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".activity.ChangeMapActivity"
             android:exported="false" />
         <activity
