@@ -54,7 +54,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        navgateTo(GpsActivity.class);
+        //navgateTo(GpsActivity.class);
         getCurrentUser();
         viewPager = findViewById(R.id.viewpager);
         commonTabLayout = findViewById(R.id.commonTabLayout);
@@ -110,17 +110,17 @@ public class HomeActivity extends BaseActivity {
         Api.config(ApiConfig.CURRENT, params).getRequest(mContext, new CallBack() {
             @Override
             public void OnSuccess(final String res, Response response) {
-//                Log.e("onSuccess", res);
+                Log.e("onSuccess", res);
                 Gson gson = new Gson();
                 UserResponse userResponse = gson.fromJson(res, UserResponse.class);
 //                ShowToastAsyn(userResponse.toString());
                 if(userResponse.getCode()==200)
                 {
                     setUserToSP(userResponse.getResult());
-//                    SaveToSP("username",userResponse.getResult().getUsername());
-//                    SaveToSP("userid",String.valueOf(userResponse.getResult().getUserId()));
-//                    SaveToSP("roleid",String.valueOf(userResponse.getResult().getRoleId()));
-//                    SaveToSP("avatarurl",String.valueOf(userResponse.getResult().getAvatarUrl()));
+                    SaveToSP("username",userResponse.getResult().getUsername());
+                    SaveToSP("userid",String.valueOf(userResponse.getResult().getUserId()));
+                    SaveToSP("roleid",String.valueOf(userResponse.getResult().getRoleId()));
+                    SaveToSP("avatarurl",String.valueOf(userResponse.getResult().getAvatarUrl()));
                 }
                 else
                 {
