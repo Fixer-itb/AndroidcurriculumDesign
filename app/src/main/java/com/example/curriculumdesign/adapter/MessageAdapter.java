@@ -11,62 +11,49 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.curriculumdesign.R;
 import com.example.curriculumdesign.entity.ClassEntity;
-import com.example.curriculumdesign.entity.TblUser;
-import com.example.curriculumdesign.entity.TblUserSign;
+import com.example.curriculumdesign.entity.MessageEntity;
 
 import java.io.Serializable;
 import java.util.List;
 
-public class StuSignAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+
 
     private Context mContext;
-    private List<TblUser> datas;
-    private StuSignAdapter.OnItemClickListener mOnItemClickListener;
-
-    public StuSignAdapter(Context context) {
-        this.mContext = context;
-    }
-
+    private List<MessageEntity> datas;
+    private ClassAdapter.OnItemClickListener mOnItemClickListener;
 
     public interface OnItemClickListener {
         void onItemClick(Serializable obj);
     }
-    public void setOnItemClickListener(StuSignAdapter.OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(ClassAdapter.OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
     }
 
 
-    public List<TblUser> getDatas() {
-        return datas;
-    }
-
-    public void setDatas(List<TblUser> datas) {
-        this.datas = datas;
+    public MessageAdapter(Context mContext) {
+        this.mContext = mContext;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_sign_stu, parent, false);
-        StuSignAdapter.ViewHolder viewHolder = new StuSignAdapter.ViewHolder(view);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_new_message, parent, false);
+        MessageAdapter.ViewHolder viewHolder = new MessageAdapter.ViewHolder(view);
         return viewHolder;
     }
 
+    public void setDatas(List<MessageEntity> datas) {
+        this.datas = datas;
+    }
 
-    /**
-     * 绑定数据
-     * @param holder 当前的holder对象
-     * @param position 下标
-     */
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        StuSignAdapter.ViewHolder viewHolder=(StuSignAdapter.ViewHolder)holder;
-        TblUser entity = datas.get(position);
-//        viewHolder.id=position;
-        viewHolder.Stu_name.setText(entity.getUsername());
+        MessageAdapter.ViewHolder viewHolder=(MessageAdapter.ViewHolder)holder;
+        MessageEntity entity = datas.get(position);
+        viewHolder.message_title.setText(entity.getMessageTitle());
+        viewHolder.message_content.setText(entity.getMessageContent());
         viewHolder.entity=entity;
-        //
-//        Picasso.with(mContext).load(entity.getURl).into(viewHolder.class_url);
     }
 
     @Override
@@ -76,15 +63,17 @@ public class StuSignAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return 0;
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private long id;
-        private TextView Stu_name;
-        private TblUser entity;
+        private TextView message_title;
+        private TextView message_content;
+        private MessageEntity entity;
 
         public ViewHolder(@NonNull View view) {
             super(view);
-            Stu_name=view.findViewById(R.id.stu_name);
-//            class_content=view.findViewById(R.id.class_content);
+            message_title=view.findViewById(R.id.tv_new_message_title);
+            message_content=view.findViewById(R.id.tv_new_message_content);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

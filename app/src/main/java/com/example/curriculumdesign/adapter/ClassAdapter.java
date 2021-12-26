@@ -33,7 +33,6 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mOnItemClickListener = onItemClickListener;
     }
 
-
     public List<ClassEntity> getDatas() {
         return datas;
     }

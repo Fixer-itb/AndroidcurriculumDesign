@@ -41,10 +41,9 @@ public class SignStuFragment extends BaseFragment {
         recyclerView=mRootView.findViewById(R.id.recyclerStuView);
         adapter = new StuSignAdapter(getActivity());
         initRecyclerView();
-        for (int i = 0; i < datas.size(); i++) {
-            datas.add(new TblUser("李姐姐"));
-        }
+        getStu();
         adapter.setDatas(datas);
+        adapter.notifyDataSetChanged();//刷新数据
         recyclerView.setAdapter(adapter);
     }
 
@@ -52,6 +51,21 @@ public class SignStuFragment extends BaseFragment {
     protected void initData() {
 
     }
+
+
+    private void getStu(){
+        if (categoryId==0){
+            for (int i = 0; i < 20; i++) {
+                datas.add(new TblUser("李姐姐签到"));
+            }
+        }
+        else{
+            for (int i = 0; i < 20; i++) {
+                datas.add(new TblUser("李姐姐不签到"));
+            }
+        }
+    }
+
 
     public static SignStuFragment newInstance(int categoryId) {
         SignStuFragment fragment = new SignStuFragment();
@@ -67,8 +81,8 @@ public class SignStuFragment extends BaseFragment {
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
-//        refreshLayout.setOnRefreshListener((refreshLayout)->{
-////            refreshLayout.finishRefresh(100);//延时多久关闭动画
-//        });
+        refreshLayout.setOnRefreshListener((refreshLayout)->{
+            refreshLayout.finishRefresh(1000);//延时多久关闭动画
+        });
     }
 }
