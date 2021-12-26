@@ -90,7 +90,7 @@ public class SPUtils {
         return null;
     }
 
-    public TblUser getUserFromSP(Context context)
+    public static TblUser getUserFromSP(Context context)
     {
         SharedPreferences sp = context.getSharedPreferences(FILE_NAME,
                 Context.MODE_PRIVATE);
