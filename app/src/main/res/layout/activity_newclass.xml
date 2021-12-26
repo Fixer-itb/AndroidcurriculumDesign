@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -40,13 +41,14 @@
         android:textSize="@dimen/text_size_16"/>
 
     <EditText
-        android:padding="5dp"
-        android:layout_margin="10dp"
         android:id="@+id/edt_courseName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:background="@drawable/rect_5_white"
-        android:hint="请输入课程名称" />
+        android:hint="请输入课程名称"
+        android:padding="5dp"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:layout_marginStart="10dp"
@@ -83,4 +85,5 @@
         android:textSize="20sp"
         android:textStyle="bold" >
     </Button>
+
 </LinearLayout>

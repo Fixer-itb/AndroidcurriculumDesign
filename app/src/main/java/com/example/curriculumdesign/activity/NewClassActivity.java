@@ -1,20 +1,16 @@
 package com.example.curriculumdesign.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.example.curriculumdesign.R;
 import com.example.curriculumdesign.base_ui.LoginActivity;
 
-public class MessageActivity extends BaseActivity {
+public class NewClassActivity extends BaseActivity {
     private ImageView ivBackup;//返回图标
     private EditText edtClassName;//课程名称
     private EditText edtClassContent;//课程内容
@@ -23,7 +19,7 @@ public class MessageActivity extends BaseActivity {
 
     @Override
     protected int initLayout() {
-        return R.layout.activity_message
+        return R.layout.activity_newclass;
     }
 
     @Override
