@@ -2,18 +2,32 @@ package com.example.curriculumdesign.fragment;
 
 
 
+import android.os.Bundle;
+import android.util.Log;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.curriculumdesign.R;
+import com.example.curriculumdesign.activity.ClassDatailActivity;
 import com.example.curriculumdesign.adapter.MessageAdapter;
 import com.example.curriculumdesign.adapter.StuSignAdapter;
+import com.example.curriculumdesign.api.Api;
+import com.example.curriculumdesign.api.ApiConfig;
+import com.example.curriculumdesign.api.CallBack;
+import com.example.curriculumdesign.entity.ClassEntity;
 import com.example.curriculumdesign.entity.MessageEntity;
+import com.example.curriculumdesign.entity.MessageResponse;
 import com.example.curriculumdesign.entity.TblUser;
+import com.example.curriculumdesign.entity.UserResponse;
+import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.Response;
 
 
 public class MessageFragment extends BaseFragment {
@@ -36,8 +50,7 @@ public class MessageFragment extends BaseFragment {
         adapter = new MessageAdapter(getActivity());
         initRecyclerView();
         getStu();
-        adapter.setDatas(datas);
-        adapter.notifyDataSetChanged();//刷新数据
+
         recyclerView.setAdapter(adapter);
     }
 
@@ -47,12 +60,7 @@ public class MessageFragment extends BaseFragment {
     }
 
     private void getStu(){
-            for (int i = 0; i < 20; i++) {
-                datas.add(new MessageEntity("全局消息","酷酷酷酷酷酷"));
-            }
-//            adapter.setOnItemClickListener((obj)->{
-//                showToast("点击了");
-//            });
+        getMessage();
     }
 
     public static MessageFragment newInstance() {
@@ -69,6 +77,53 @@ public class MessageFragment extends BaseFragment {
         recyclerView.setLayoutManager(manager);
         refreshLayout.setOnRefreshListener((refreshLayout)->{
             refreshLayout.finishRefresh(1000);//延时多久关闭动画
+            getMessage();
         });
     }
+    void getMessage() {
+        HashMap<String, Object> params = new HashMap<>();
+        Api.config(ApiConfig.MESSAGELIST, params).getRequest(getActivity(), new CallBack() {
+            @Override
+            public void OnSuccess(final String res, Response response) {
+                Log.e("onSuccess", res);
+                Gson gson = new Gson();
+                MessageResponse messageResponse = gson.fromJson(res, MessageResponse.class);
+//                ShowToastAsyn(userResponse.toString());
+                if (messageResponse.getCode() == 200) {
+                   datas= messageResponse.getResult();
+
+                } else {
+                    showToastSync(messageResponse.getMessage());
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(datas.size()>0)
+                        {
+                            Log.e("test","1");
+                            adapter.setDatas(datas);
+                            adapter.setOnItemClickListener((obj -> {
+
+                            }));
+                            adapter.notifyDataSetChanged();//刷新数据
+                        }
+                        else
+                        {
+                            showToast("暂时没有获得数据");
+                        }
+                    }
+                });
+
+            }
+
+            @Override
+            public void OnFailure(Exception e) {
+//                Log.e("onFailure", e.getMessage());
+                showToastSync("连接服务器失败！");
+            }
+        });
+
+
+
+}
 }

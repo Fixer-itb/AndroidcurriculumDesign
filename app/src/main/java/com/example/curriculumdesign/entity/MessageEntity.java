@@ -1,6 +1,7 @@
 package com.example.curriculumdesign.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public class MessageEntity implements Serializable {
     private Long messageId;
@@ -25,10 +26,9 @@ public class MessageEntity implements Serializable {
      */
     private String messageContent;
 
-    public MessageEntity(String messageTitle, String messageContent) {
-        this.messageTitle = messageTitle;
-        this.messageContent = messageContent;
-    }
+    private String gmtCreated;
+
+    private String gmtModified;
 
     public Long getMessageId() {
         return messageId;
@@ -68,5 +68,21 @@ public class MessageEntity implements Serializable {
 
     public void setMessageContent(String messageContent) {
         this.messageContent = messageContent;
+    }
+
+    public String getGmtCreated() {
+        return gmtCreated;
+    }
+
+    public void setGmtCreated(String gmtCreated) {
+        this.gmtCreated = gmtCreated;
+    }
+
+    public String getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(String gmtModified) {
+        this.gmtModified = gmtModified;
     }
 }

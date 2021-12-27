@@ -23,12 +23,12 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<MessageEntity> datas;
     private ClassAdapter.OnItemClickListener mOnItemClickListener;
 
-//    public interface OnItemClickListener {
-//        void onItemClick(Serializable obj);
-//    }
-//    public void setOnItemClickListener(ClassAdapter.OnItemClickListener onItemClickListener) {
-//        mOnItemClickListener = onItemClickListener;
-//    }
+    public interface OnItemClickListener {
+        void onItemClick(Serializable obj);
+    }
+    public void setOnItemClickListener(ClassAdapter.OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
 
 
     public MessageAdapter(Context mContext) {
@@ -53,6 +53,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         MessageEntity entity = datas.get(position);
         viewHolder.message_title.setText(entity.getMessageTitle());
         viewHolder.message_content.setText(entity.getMessageContent());
+        viewHolder.message_date.setText(entity.getGmtCreated());
         viewHolder.entity=entity;
     }
 
@@ -69,17 +70,18 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private TextView message_title;
         private TextView message_content;
         private MessageEntity entity;
-
+        private TextView message_date;
         public ViewHolder(@NonNull View view) {
             super(view);
             message_title=view.findViewById(R.id.tv_new_message_title);
             message_content=view.findViewById(R.id.tv_new_message_content);
-//            view.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    mOnItemClickListener.onItemClick(entity);
-//                }
-//            });
+            message_date=view.findViewById(R.id.tv_sign_time);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickListener.onItemClick(entity);
+                }
+            });
 
         }
     }

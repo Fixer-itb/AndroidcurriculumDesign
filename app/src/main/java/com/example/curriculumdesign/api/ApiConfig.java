@@ -24,5 +24,6 @@ public class ApiConfig {
     public static final int MQ_PORT=5672;
     public static final String MQ_USERNAME="guest";
     public static final String MQ_PASSWORD="guest";
+    public static final String MESSAGELIST="/message/list";
 
 }
