@@ -1,4 +1,4 @@
-package com.example.curriculumdesign.base_ui;
+package com.example.curriculumdesign.activity;
 
 import android.content.Intent;
 import android.text.Editable;
@@ -7,10 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.example.curriculumdesign.MainActivity;
-import com.example.curriculumdesign.activity.BaseActivity;
 import com.example.curriculumdesign.R;
 import com.example.curriculumdesign.api.Api;
 import com.example.curriculumdesign.api.ApiConfig;

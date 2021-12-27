@@ -1,7 +1,6 @@
 package com.example.curriculumdesign.service;
 
 import android.app.AppOpsManager;
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -16,7 +15,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -25,7 +23,6 @@ import androidx.core.app.NotificationManagerCompat;
 import com.example.curriculumdesign.R;
 import com.example.curriculumdesign.activity.CodeActivity;
 import com.example.curriculumdesign.activity.GpsActivity;
-import com.example.curriculumdesign.base_ui.LoginActivity;
 import com.example.curriculumdesign.receiver.NotifyClickReceiver;
 import com.example.curriculumdesign.utils.ConnectionUtils;
 import com.example.curriculumdesign.utils.SPUtils;
@@ -38,8 +35,6 @@ import com.rabbitmq.client.Envelope;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Random;
-import java.util.UUID;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -164,6 +159,7 @@ public class NotificationService extends Service
             intent = new Intent(this, GpsActivity.class);
         }
         intent.putExtra("signid",msglist[1]);
+        intent.putExtra("type","gps");
         Log.e("id",msglist[1]);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         String channelId = createNotificationChannel("my_channel_ID", "my_channel_NAME", NotificationManager.IMPORTANCE_HIGH);

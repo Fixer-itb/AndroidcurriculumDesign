@@ -37,6 +37,8 @@
             android:name=".activity.GpsActivity"
             android:exported="false" />
 
+        <activity android:name=".activity.SigninActivity"
+            android:exported="false"/>
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="3c548c69297bd66d2179a433437ff21f" />
@@ -61,7 +63,7 @@
             android:name=".activity.ClassDatailActivity"
             android:exported="false" />
         <activity
-            android:name=".base_ui.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -70,7 +72,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".base_ui.RegisterActivity" />
+        <activity android:name=".activity.RegisterActivity" />
 
         <receiver android:name=".receiver.NotifyClickReceiver" />
 

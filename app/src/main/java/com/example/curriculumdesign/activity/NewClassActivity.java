@@ -1,14 +1,24 @@
 package com.example.curriculumdesign.activity;
 
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.example.curriculumdesign.R;
-import com.example.curriculumdesign.base_ui.LoginActivity;
+import com.example.curriculumdesign.api.Api;
+import com.example.curriculumdesign.api.ApiConfig;
+import com.example.curriculumdesign.api.CallBack;
+import com.example.curriculumdesign.entity.BaseResponse;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+
+import okhttp3.Response;
 
 public class NewClassActivity extends BaseActivity {
     private ImageView ivBackup;//返回图标
@@ -78,11 +88,49 @@ public class NewClassActivity extends BaseActivity {
         btnCreateClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                 String classContent=edtClassContent.getText().toString();
+                 String className=edtClassName.getText().toString();
+                 newclass(classContent,className);
+//                finish();
 //                navgateTo(LoginActivity.class);
             }
         });
 
 
     }
+    void newclass(String classContent,String className)
+    {
+        Long userid=Long.parseLong(GetStringFromSP("userid"));
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("classContent", classContent);
+        params.put("className", className);
+        params.put("createId",userid);
+
+        Api.config(ApiConfig.ADDCLASS, params).postRequest(this,new CallBack() {
+            @Override
+            public void OnSuccess(final String res, Response response) {
+                Log.e("onSuccess", res);
+                Gson gson = new Gson();
+                BaseResponse baseResponse = gson.fromJson(res, BaseResponse.class);
+                if(baseResponse.getCode()==200)
+                {
+
+                    ShowToastAsyn("添加成功！");
+                }
+                else
+                {
+                    ShowToastAsyn(baseResponse.getMessage());
+                }
+            }
+
+            @Override
+            public void OnFailure(Exception e) {
+                Log.e("onFailure", e.toString());
+                ShowToastAsyn("连接服务器失败！");
+            }
+        });
+    }
+   
+
+
 }

@@ -27,8 +27,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import com.example.curriculumdesign.api.*;
-import com.example.curriculumdesign.base_ui.LoginActivity;
+
+import com.example.curriculumdesign.activity.LoginActivity;
 import com.example.curriculumdesign.utils.StringUtils;
 
 public class Api {

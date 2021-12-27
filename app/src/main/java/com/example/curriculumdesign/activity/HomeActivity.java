@@ -54,7 +54,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        //navgateTo(GpsActivity.class);
+        //navgateTo(SigninActivity.class);
         getCurrentUser();
         viewPager = findViewById(R.id.viewpager);
         commonTabLayout = findViewById(R.id.commonTabLayout);

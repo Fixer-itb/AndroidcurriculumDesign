@@ -1,19 +1,13 @@
 package com.example.curriculumdesign.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import butterknife.BindView;
 import butterknife.OnClick;;
 
 import com.example.curriculumdesign.R;
-import com.example.curriculumdesign.base_ui.LoginActivity;
+import com.example.curriculumdesign.activity.LoginActivity;
 
 
 public class MyFragment extends BaseFragment {

@@ -3,13 +3,12 @@ package com.example.curriculumdesign.activity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.curriculumdesign.R;
-import com.example.curriculumdesign.SigninActivity;
 import com.example.curriculumdesign.adapter.SignAdapter_stu;
 import com.example.curriculumdesign.adapter.SignAdapter_tea;
 import com.example.curriculumdesign.entity.ClassEntity;
@@ -66,8 +65,10 @@ public class ClassDatailActivity extends BaseActivity {
         }));
         if(haveAuth()){
             sign_btn.setOnClickListener(v -> {
+                Intent intent=new Intent(mContext,SigninActivity.class);
+                intent.putExtra("classId",String.valueOf(currentClass.getId()));
 //                ShowToast("发起签到");
-                navgateTo(SigninActivity.class);
+                startActivity(intent);
             });
         }
         class_detail_title.setText(currentClass.getClassName());

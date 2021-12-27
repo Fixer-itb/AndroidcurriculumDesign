@@ -17,6 +17,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -35,13 +36,24 @@ import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.MyLocationStyle;
 import com.example.curriculumdesign.R;
+import com.example.curriculumdesign.api.Api;
+import com.example.curriculumdesign.api.ApiConfig;
+import com.example.curriculumdesign.api.CallBack;
+import com.example.curriculumdesign.entity.BaseResponse;
+import com.google.gson.Gson;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class GpsActivity extends AppCompatActivity {
+import okhttp3.Response;
 
+public class GpsActivity extends AppCompatActivity {
+    public Context mContext;
+    String type;
+    String classId;
+    String time;
     //是否需要检测后台定位权限，设置为true时，如果用户没有给予后台定位权限会弹窗提示
     private boolean needCheckBackLocation = false;
     //如果设置了target > 28，需要增加这个权限，否则不会弹出"始终允许"这个选择框
@@ -95,6 +107,11 @@ public class GpsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext=this;
+        Intent intent=getIntent();
+        type=intent.getStringExtra("type");
+        classId=intent.getStringExtra("classId");
+        time=intent.getStringExtra("time");
         setContentView(R.layout.activity_gps);
         if(Build.VERSION.SDK_INT > 28
                 && getApplicationContext().getApplicationInfo().targetSdkVersion > 28) {
@@ -125,12 +142,23 @@ public class GpsActivity extends AppCompatActivity {
         aMap.setMyLocationEnabled(true);
 
         Button btn = findViewById(R.id.btn);
+        if(type.equals("sign"))
+        {
+            btn.setText("发起签到");
+        }
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(type.equals("sign"))
+                {
+                    Long classId1=Long.parseLong(classId);
+                    String locationXY=jingdu+","+weidu;
+                    Long time1=Long.parseLong(time);
+                    startSign(classId1,locationXY,1,time1);
+                }
                 Log.e("s", "jingdu: " + jingdu);
                 Log.e("s", "weidu: " + weidu);
+
             }
         });
 
@@ -323,6 +351,44 @@ public class GpsActivity extends AppCompatActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+    void startSign(Long classId,String locationXy,int signType,Long time)
+    {
+        ;
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("classId", classId);
+        params.put("signType", signType);
+        params.put("time",time);
+        params.put("locationXy",locationXy);
+        Api.config(ApiConfig.STARTSIGN, params).postRequest(this,new CallBack() {
+            @Override
+            public void OnSuccess(final String res, Response response) {
+                Log.e("onSuccess", res);
+                Gson gson = new Gson();
+                BaseResponse baseResponse = gson.fromJson(res, BaseResponse.class);
+                if(baseResponse.getCode()==200)
+                {
+
+                    ShowToastAsyn("开始签到成功！");
+                }
+                else
+                {
+                    ShowToastAsyn(baseResponse.getMessage());
+                }
+            }
+
+            @Override
+            public void OnFailure(Exception e) {
+                Log.e("onFailure", e.toString());
+                ShowToastAsyn("连接服务器失败！");
+            }
+        });
+    }
+    public void ShowToastAsyn(String msg)
+    {
+        Looper.prepare();
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
+        Looper.loop();
     }
 
 }
