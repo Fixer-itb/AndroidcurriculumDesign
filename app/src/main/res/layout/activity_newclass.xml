@@ -81,7 +81,7 @@
         android:background="@drawable/bg_btn_color_c"
         android:layout_centerInParent="true"
         android:text="创建课程"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold" >
     </Button>

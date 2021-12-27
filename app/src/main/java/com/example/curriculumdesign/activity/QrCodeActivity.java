@@ -120,6 +120,8 @@ public class QrCodeActivity extends BaseActivity{
                 case REQUEST_CODE_PHOTO:
                     parsePhoto(data);
                     break;
+                default:
+                    finish();
             }
         }
     }

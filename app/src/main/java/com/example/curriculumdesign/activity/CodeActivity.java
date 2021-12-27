@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.curriculumdesign.R;
 import com.example.curriculumdesign.utils.QRCodeUtil;
@@ -16,8 +17,9 @@ public class CodeActivity extends BaseActivity {
     QRCodeUtil util;
     private ImageView button;
     private ImageView code;
-    String classSign;
+    private String classSign;
     private String classId;
+    private TextView title;
 
 
     @Override
@@ -30,12 +32,13 @@ public class CodeActivity extends BaseActivity {
         util = new QRCodeUtil();
         button=findViewById(R.id.btn_back);
         code=findViewById(R.id.img_qr);
+        title=findViewById(R.id.code_title);
         button.setOnClickListener((v -> {
             finish();
         }));
         Intent intent=getIntent();
-        String classSign = intent.getStringExtra("signid");
-        String classId = intent.getStringExtra("classId");
+        classSign = intent.getStringExtra("signid");
+        classId = intent.getStringExtra("classId");
         ShowToast(intent.getStringExtra("signid"));
     }
 
@@ -43,6 +46,11 @@ public class CodeActivity extends BaseActivity {
     protected void initData() {
         if (classSign==null){//加课二维码
             Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap("1,"+classId, 250, 250);
+            code.setImageBitmap(mBitmap);
+        }
+        else{
+            title.setText("扫码签到");
+            Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap("0,"+classSign, 250, 250);
             code.setImageBitmap(mBitmap);
         }
     }

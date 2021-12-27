@@ -37,7 +37,7 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void initView() {
         //获取输入框内容
-        mETUserName = findViewById(R.id.edt_name);
+//        mETUserName = findViewById(R.id.edt_name);
         mETNewUserName = findViewById(R.id.edt_ID);
         mETPassword = findViewById(R.id.edt_password);
         mETPasswordAck = findViewById(R.id.edt_new_password);
@@ -48,22 +48,7 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        mETUserName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         mETNewUserName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

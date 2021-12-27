@@ -3,15 +3,23 @@ package com.example.curriculumdesign.fragment;
 import android.content.Intent;
 
 import android.view.View;
+import android.widget.TextView;
 
 import butterknife.OnClick;;
 
 import com.example.curriculumdesign.R;
 import com.example.curriculumdesign.activity.LoginActivity;
+import com.example.curriculumdesign.entity.TblUser;
+import com.example.curriculumdesign.utils.SPUtils;
 
 
 public class MyFragment extends BaseFragment {
 
+
+    private TextView username;
+    private TextView role;
+    private SPUtils sp;
+    private TblUser user;
 
     public static MyFragment newInstance() {
         MyFragment fragment = new MyFragment();
@@ -25,11 +33,21 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        sp=new SPUtils();
+        username=mRootView.findViewById(R.id.username);
+        role=mRootView.findViewById(R.id.roles);
+        user = sp.getUserFromSP(mRootView.getContext());
 
     }
 
     @Override
     protected void initData() {
+        if (username!=null&&user!=null){
+            username.setText(user.getUsername());
+            String[] strings={"管理员","学生","教师"};
+            role.setText(strings[Integer.parseInt(user.getRoleId().toString())]);
+        }
+
     }
 
     @OnClick({R.id.img_header,R.id.btn_logout})

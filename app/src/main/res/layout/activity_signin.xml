@@ -24,7 +24,8 @@
             android:layout_centerInParent="true"
             android:text="发起签到"
             android:textSize="20sp"
-            android:textColor="@color/black"
+
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -110,7 +111,7 @@
         android:background="@drawable/bg_btn_color_c"
         android:layout_centerInParent="true"
         android:text="发起签到"
-        android:textColor="@color/black"
+        android:textColor="@color/whiteSmoke"
         android:textSize="20sp"
         android:textStyle="bold" >
     </Button>

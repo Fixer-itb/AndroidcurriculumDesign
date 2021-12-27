@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -27,7 +28,8 @@ public class SigninActivity extends BaseActivity {
     private EditText time;
     private Button submit;
     private int selection=0;//默认是二维码签到
-    String classId;
+    private String classId;
+    private ImageView back;
     @Override
     protected int initLayout() {
         return R.layout.activity_signin;
@@ -35,6 +37,7 @@ public class SigninActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        back=findViewById(R.id.iv_signin_back_up);
         style = findViewById(R.id.radio);
         time = findViewById(R.id.edt_time);
         submit = findViewById(R.id.btn_send_signin);
@@ -45,6 +48,9 @@ public class SigninActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        back.setOnClickListener((v -> {
+            finish();
+        }));
         time.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -71,6 +77,7 @@ public class SigninActivity extends BaseActivity {
                 if(selection==0)
                 {
                     startSign(Long.parseLong(classId),null,selection,Long.parseLong(time.getText().toString()));
+                    finish();
                 }
                 else
                 {

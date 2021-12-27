@@ -2,6 +2,7 @@ package com.example.curriculumdesign.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,15 +18,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.curriculumdesign.R;
 import com.example.curriculumdesign.api.Api;
 import com.example.curriculumdesign.api.ApiConfig;
+import com.example.curriculumdesign.api.CallBack;
+import com.example.curriculumdesign.entity.BaseResponse;
 import com.example.curriculumdesign.entity.ClassEntity;
 import com.example.curriculumdesign.entity.SignEntity;
 import com.example.curriculumdesign.entity.TblUser;
 import com.example.curriculumdesign.entity.TblUserSign;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
+
+import okhttp3.Response;
 
 public class StuSignAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -42,7 +49,7 @@ public class StuSignAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     public interface OnItemClickListener {
-        void onItemClick(Button button);
+        void onItemClick(Serializable obj);
     }
     public void setOnItemClickListener(StuSignAdapter.OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
@@ -80,15 +87,7 @@ public class StuSignAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         viewHolder.id=position;
         viewHolder.Stu_name.setText(entity.getUsername());
         viewHolder.entity=entity;
-        viewHolder.change_sign_btn.setOnClickListener((v -> {
-            HashMap<String,Object> params = new HashMap<>();
-            params.put("userId",entity.getUserId());
-            params.put("status",categoryId);
-            params.put("classSignId",currentSign.getClassSignId());
-            Log.d("22222sds", "onBindViewHolder: ");
-//            点击
 
-        }));
         //
 //        Picasso.with(mContext).load(entity.getURl).into(viewHolder.class_url);
     }
@@ -117,14 +116,16 @@ public class StuSignAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 change_sign_btn.setBackground(mContext.getResources().getDrawable(R.drawable.bg_btn_color_green));
                 Picasso.with(mContext).load(R.mipmap.absence).resize(30,30).centerCrop().into(imageView);
             }
-//            class_content=view.findViewById(R.id.class_content);
-            view.setOnClickListener(new View.OnClickListener() {
+            else{
+                change_sign_btn.setBackground(mContext.getResources().getDrawable(R.drawable.bg_btn_color_red));
+//                Picasso.with(mContext).load(R.mipmap.attendance).resize(30,30).centerCrop().into(imageView);
+            }
+            change_sign_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    mOnItemClickListener.onItemClick(entity);
+                    mOnItemClickListener.onItemClick(entity);
                 }
             });
-
         }
     }
 }

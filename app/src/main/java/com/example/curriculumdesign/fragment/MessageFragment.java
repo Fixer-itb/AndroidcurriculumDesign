@@ -84,6 +84,7 @@ public class MessageFragment extends BaseFragment {
         Api.config(ApiConfig.MESSAGELIST, params).getRequest(getActivity(), new CallBack() {
             @Override
             public void OnSuccess(final String res, Response response) {
+                refreshLayout.finishRefresh(true);
                 Log.e("onSuccess", res);
                 Gson gson = new Gson();
                 MessageResponse messageResponse = gson.fromJson(res, MessageResponse.class);
@@ -118,6 +119,7 @@ public class MessageFragment extends BaseFragment {
             @Override
             public void OnFailure(Exception e) {
 //                Log.e("onFailure", e.getMessage());
+                refreshLayout.finishRefresh(true);
                 showToastSync("连接服务器失败！");
             }
         });

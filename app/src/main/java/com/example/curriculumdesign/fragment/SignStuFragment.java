@@ -2,7 +2,9 @@ package com.example.curriculumdesign.fragment;
 
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +16,7 @@ import com.example.curriculumdesign.adapter.StuSignAdapter;
 import com.example.curriculumdesign.api.Api;
 import com.example.curriculumdesign.api.ApiConfig;
 import com.example.curriculumdesign.api.CallBack;
+import com.example.curriculumdesign.entity.BaseResponse;
 import com.example.curriculumdesign.entity.ClassEntity;
 import com.example.curriculumdesign.entity.SignEntity;
 import com.example.curriculumdesign.entity.TblUser;
@@ -21,6 +24,7 @@ import com.example.curriculumdesign.entity.responseBody.SignStuResponse;
 import com.google.gson.Gson;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +54,10 @@ public class SignStuFragment extends BaseFragment {
         refreshLayout = mRootView.findViewById(R.id.stuRefreshLayout);
         recyclerView=mRootView.findViewById(R.id.recyclerStuView);
         adapter = new StuSignAdapter(getActivity(),categoryId,currentSign);
+        adapter.setOnItemClickListener(obj -> {
+//            Log.d("1", "initView: "+((TblUser) obj).getUsername()+"  "+categoryId+" "+currentSign.getClassSignId());
+            changeStatus((TblUser) obj);
+        });
         initRecyclerView();
         recyclerView.setAdapter(adapter);
         getStu();
@@ -67,6 +75,7 @@ public class SignStuFragment extends BaseFragment {
         Gson gson = new Gson();
         if (categoryId==0){
             Api.config(ApiConfig.FINISHSTUDENT,params).getRequest(mRootView.getContext(), new CallBack() {
+                @SuppressLint("NotifyDataSetChanged")
                 @Override
                 public void OnSuccess(String res, Response response) {
                     refreshLayout.finishRefresh(true);//延时多久关闭动画
@@ -76,23 +85,26 @@ public class SignStuFragment extends BaseFragment {
                         if (response!=null &&list.size()>0) {
                             list.remove(0);
                             datas=list;
-
+                        adapter.setDatas(list);
                         }
-                        else showToastSync("暂时加载无数据");
-
+                        else{
+                            datas=null;
+                            adapter.setDatas(datas);
+                        }
+                        adapter.notifyDataSetChanged();//刷新数据
                 });
-                    adapter.notifyDataSetChanged();//刷新数据
+
                 }
 
                 @Override
                 public void OnFailure(Exception e) {
-                    showToast("网络超时");
                     refreshLayout.finishRefresh(true);
                 }
             });
         }
         else{
             Api.config(ApiConfig.UNFINISHSTUDENT,params).getRequest(mRootView.getContext(), new CallBack() {
+                @SuppressLint("NotifyDataSetChanged")
                 @Override
                 public void OnSuccess(String res, Response response) {
                     refreshLayout.finishRefresh(true);//延时多久关闭动画
@@ -102,10 +114,12 @@ public class SignStuFragment extends BaseFragment {
                         if (response!=null &&list.size()>0)
                         {
                         datas=json.getResult();
-
+                        adapter.setDatas(datas);
                         }
                         else{
-                            showToastSync("暂时加载无数据");
+                            datas=null;
+                            adapter.setDatas(datas);
+//                            showToastSync("暂时加载无数据");
                         }
                         adapter.notifyDataSetChanged();//刷新数据
                     });
@@ -114,7 +128,6 @@ public class SignStuFragment extends BaseFragment {
 
                 @Override
                 public void OnFailure(Exception e) {
-                    showToast("网络超时");
                     refreshLayout.finishRefresh(true);
                 }
             });
@@ -128,6 +141,39 @@ public class SignStuFragment extends BaseFragment {
         fragment.categoryId=categoryId;
         fragment.currentSign=currentSign;
         return fragment;
+    }
+
+
+    private void changeStatus(TblUser entity){
+        Log.d("1", "initView: "+entity.getUsername()+"  "
+                +categoryId+" "+currentSign.getClassSignId());
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("userId",entity.getUserId());
+        params.put("status",categoryId);
+        params.put("classSignId",currentSign.getClassSignId());
+        Gson gson = new Gson();
+//        if (categoryId==0){
+//
+//        }
+//        else {
+            Api.config(ApiConfig.SignExchange,params).postRequest(mRootView.getContext(), new CallBack() {
+                @Override
+                public void OnSuccess(String res, Response response) {
+                    Log.d("change", "OnSuccess: +"+res);
+                    BaseResponse Response = gson.fromJson(res, BaseResponse.class);
+                    if (Response.getCode() == 200) {
+                        showToastSync("成功修改"+entity.getUsername()+"的签到");
+                        getStu();
+                    }
+                }
+                @Override
+                public void OnFailure(Exception e) {
+
+                }
+            });
+
+
+
     }
 
 

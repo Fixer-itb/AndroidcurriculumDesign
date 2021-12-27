@@ -23,7 +23,7 @@ public class SignAdapter_stu extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private Context mContext;
     private List<SignEntity> datas;
-    private ClassAdapter.OnItemClickListener mOnItemClickListener;
+    private SignAdapter_stu.OnItemClickListener mOnItemClickListener;
 
 
     public SignAdapter_stu(Context context) {
@@ -87,16 +87,16 @@ public class SignAdapter_stu extends RecyclerView.Adapter<RecyclerView.ViewHolde
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mOnItemClickListener.onItemClick(signEntity);
+                    mOnItemClickListener.onItemClick(signEntity,signEntity.getStatus());
                 }
             });
         }
     }
 
     public interface OnItemClickListener {
-        void onItemClick(Serializable obj);
+        void onItemClick(Serializable obj,int status);
     }
-    public void setOnItemClickListener(ClassAdapter.OnItemClickListener onItemClickListener) {
+    public void setOnItemClickListener(SignAdapter_stu.OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
     }
 }

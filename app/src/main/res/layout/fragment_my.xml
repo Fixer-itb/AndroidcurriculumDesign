@@ -54,6 +54,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="雷课堂会员"
+                        android:id="@+id/username"
                         android:textColor="@color/skin_text_white"
                         android:textSize="16sp" />
 
@@ -61,6 +62,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:id="@+id/roles"
                         android:text="VIP"
                         android:textColor="@color/skin_text_white"
                         android:textSize="12sp" />

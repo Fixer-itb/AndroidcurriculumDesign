@@ -17,6 +17,7 @@ import com.example.curriculumdesign.api.Api;
 import com.example.curriculumdesign.api.ApiConfig;
 import com.example.curriculumdesign.api.CallBack;
 import com.example.curriculumdesign.entity.ClassEntity;
+import com.example.curriculumdesign.entity.Gps;
 import com.example.curriculumdesign.entity.ResponseBody;
 import com.example.curriculumdesign.entity.SignEntity;
 import com.example.curriculumdesign.entity.TblUser;
@@ -39,7 +40,7 @@ public class ClassDatailActivity extends BaseActivity {
     private ImageView btnBack;
     private TextView class_detail_title;
     private TextView class_detail_content;
-
+    private ImageView btnCode;
     private Button sign_btn;
 
     /**
@@ -63,12 +64,18 @@ public class ClassDatailActivity extends BaseActivity {
         refreshLayout=findViewById(R.id.refreshLayoutSign);
         currentClass =(ClassEntity)bundle.get("class");
         sign_btn=findViewById(R.id.sign_now_btn);
+        btnCode=findViewById(R.id.classToQrCode);
         btnBack=findViewById(R.id.btn_back_home);
         recyclerView=findViewById(R.id.recyclerSignView);
         class_detail_title=findViewById(R.id.class_detail_title);
         class_detail_content=findViewById(R.id.class_detail_content);
         adapter_stu=new SignAdapter_stu(mContext);
         adapter_tea=new SignAdapter_tea(mContext);
+        btnCode.setOnClickListener((v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("classId",String.valueOf(currentClass.getId()));
+            navigateToWithBundle(CodeActivity.class,bundle);
+        }));
     }
 
     @Override
@@ -123,9 +130,23 @@ public class ClassDatailActivity extends BaseActivity {
                    }
                    else{
                        adapter_stu.setDatas(list);
-                       adapter_stu.setOnItemClickListener((obj)->{
-                           ShowToast("学生");
+                       adapter_stu.setOnItemClickListener((obj,s)->{
                            SignEntity entity=(SignEntity) obj;
+                           if (entity.getStatus()==0){
+                               ShowToast("签到已结束");
+                           }
+                           else{
+                               if (entity.getSignType()==0){//二维码
+                                   navgateTo(QrCodeActivity.class);
+                               }
+                               else{
+                                   Bundle bundle = new Bundle();
+                                   bundle.putString("signid",entity.getClassSignId().toString());
+                                   navgateTo(GpsActivity.class);
+                               }
+                           }
+
+
                        });
                        adapter_stu.notifyDataSetChanged();//刷新数据
                    }

@@ -55,6 +55,7 @@ public class SignAdapter_tea extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.sign_isClose.setText("已结束");
             viewHolder.sign_isClose.setTextColor(mContext.getResources().getColor(R.color.red));
         }
+
         viewHolder.signEntity=entity;
     }
 
