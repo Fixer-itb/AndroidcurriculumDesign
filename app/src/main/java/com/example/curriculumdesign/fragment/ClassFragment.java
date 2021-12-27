@@ -39,8 +39,6 @@ public class ClassFragment extends BaseFragment {
     private int categoryId;
     private RecyclerView recyclerView;
     private RefreshLayout refreshLayout;
-    private String title;
-    private TextView  tv;
     private List<ClassEntity> datas = new ArrayList<>();
     private int pageNum=1;
     private ClassAdapter adapter ;
@@ -88,7 +86,6 @@ public class ClassFragment extends BaseFragment {
         Api.config(url,params).getRequest(getActivity(), new CallBack() {
             @Override
             public void OnSuccess(String res, Response response) {
-//                Log.e("onsuccess",res);
                 getActivity().runOnUiThread(()->{
                     if (isRefresh){
                         refreshLayout.finishRefresh(true);//关闭下拉刷新
@@ -122,7 +119,7 @@ public class ClassFragment extends BaseFragment {
                         adapter.setOnItemClickListener((obj -> {
                             ClassEntity newsEntity = (ClassEntity) obj;
                             Bundle bundle = new Bundle();
-                            bundle.putSerializable("class",obj);
+                            bundle.putSerializable("class",newsEntity);
                             navigateToWithBundle(ClassDatailActivity.class, bundle);
                         }));
                         adapter.notifyDataSetChanged();//刷新数据

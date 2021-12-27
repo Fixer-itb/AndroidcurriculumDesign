@@ -76,7 +76,6 @@ public class MessageFragment extends BaseFragment {
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(manager);
         refreshLayout.setOnRefreshListener((refreshLayout)->{
-            refreshLayout.finishRefresh(1000);//延时多久关闭动画
             getMessage();
         });
     }

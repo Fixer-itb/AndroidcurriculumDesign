@@ -46,6 +46,7 @@ public class HomeFragment extends BaseFragment  {
         {
             newClassBtn.setVisibility(View.VISIBLE);
             newClassBtn.setOnClickListener((v -> {
+
                 navigateTo(NewClassActivity.class);
 //                showToast("新建课程");
             }));

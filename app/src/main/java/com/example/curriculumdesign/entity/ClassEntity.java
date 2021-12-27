@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class ClassEntity implements Serializable {
-    private long id;
+    private long classId;
     /**
      * 创建人id
      */
@@ -21,13 +21,14 @@ public class ClassEntity implements Serializable {
     private String classContent;
 
     public ClassEntity(long id, Long createId, String className, String classContent, String gmtCreated, String gmtModified) {
-        this.id = id;
+        this.classId = id;
         this.createId = createId;
         this.className = className;
         this.classContent = classContent;
         this.gmtCreated = gmtCreated;
         this.gmtModified = gmtModified;
     }
+
 
     private String gmtCreated;
 
@@ -49,7 +50,7 @@ public class ClassEntity implements Serializable {
     @Override
     public String toString() {
         return "ClassEntity{" +
-                "id=" + id +
+                "id=" + classId +
                 ", createId=" + createId +
                 ", className='" + className + '\'' +
                 ", classContent='" + classContent + '\'' +
@@ -59,11 +60,11 @@ public class ClassEntity implements Serializable {
     }
 
     public long getId() {
-        return id;
+        return classId;
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.classId = id;
     }
 
     public Long getCreateId() {

@@ -41,6 +41,7 @@
         android:layout_height="1sp"
         android:background="@color/gray" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,6 +57,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="停止签到"
+            android:background="@color/red"
+            android:enabled="false"
             android:id="@+id/stop_btn"
             />
         <View
@@ -63,6 +66,7 @@
             android:layout_height="50sp"
             android:background="@color/white" />
     </LinearLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1sp"

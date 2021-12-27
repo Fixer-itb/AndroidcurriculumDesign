@@ -1,6 +1,8 @@
 package com.example.curriculumdesign.activity;
 
 
+import android.annotation.SuppressLint;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,8 +24,8 @@ public class SignDetailActivity extends BaseActivity {
 
     private SignEntity sign;
     private ImageView btnBack;
+    private Button stop_btn;
     private TextView sign_detail_title;
-
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private final String[] mTitles={"已签到学生","未签到学生"};
     private ViewPager viewPager;
@@ -37,23 +39,26 @@ public class SignDetailActivity extends BaseActivity {
         return R.layout.activity_sign_detail;
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void initView() {
-        sign = (SignEntity)bundle.getSerializable("sign");
+        sign = (SignEntity)getIntent().getExtras().getSerializable("sign");
         sign_detail_title=findViewById(R.id.sign_detail_title);
         btnBack=findViewById(R.id.btn_back_class);
         viewPager=findViewById(R.id.SignFixedViewpager);
         slidingTabLayout=findViewById(R.id.slidingSignTabLayout);
-
-
+        stop_btn=findViewById(R.id.stop_btn);
+        if (sign.getStatus()==0) {stop_btn.setEnabled(true);
+        stop_btn.setBackground(getResources().getDrawable(R.color.Gray_red));
+        }
     }
 
     @Override
     protected void initData() {
         btnBack.setOnClickListener((v -> {finish();}));
         sign_detail_title.setText(sign.getSignName());
-        initTab();
 
+        initTab();
     }
 
     /**
@@ -62,7 +67,7 @@ public class SignDetailActivity extends BaseActivity {
     private void initTab(){
         int i=0;
         for (String title: mTitles) {
-            mFragments.add(SignStuFragment.newInstance(i));
+            mFragments.add(SignStuFragment.newInstance(i,sign));
             i++;
         }
         viewPager.setOffscreenPageLimit(mFragments.size());

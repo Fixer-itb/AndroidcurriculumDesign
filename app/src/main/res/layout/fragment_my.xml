@@ -145,12 +145,14 @@
                     android:layout_centerVertical="true"
                     android:src="@mipmap/icon_left_arrow" />
             </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:background="#EEEEEE" />
+
             <RelativeLayout
                 android:id="@+id/rl_vip_merge"
                 android:layout_width="match_parent"
@@ -193,21 +195,22 @@
         </LinearLayout>
     </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/btn_logout"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/shape_my_logout_bg">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="退出登录"
-                android:textColor="@color/skin_text_white"
-                android:textSize="18sp" />
-        </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_my_logout_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="退出登录"
+            android:textColor="@color/skin_text_white"
+            android:textSize="18sp" />
+    </RelativeLayout>
 </RelativeLayout>
