@@ -19,6 +19,9 @@ import androidx.core.app.ActivityOptionsCompat;
 import com.example.curriculumdesign.R;
 import com.example.curriculumdesign.api.Api;
 import com.example.curriculumdesign.api.ApiConfig;
+import com.example.curriculumdesign.api.CallBack;
+import com.example.curriculumdesign.entity.BaseResponse;
+import com.google.gson.Gson;
 import com.google.zxing.Result;
 import com.king.zxing.CameraScan;
 import com.king.zxing.CaptureActivity;
@@ -29,7 +32,9 @@ import com.king.zxing.util.CodeUtils;
 import com.king.zxing.util.LogUtils;
 
 import java.io.IOException;
+import java.util.HashMap;
 
+import okhttp3.Response;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -107,8 +112,9 @@ public class QrCodeActivity extends BaseActivity{
                 case REQUEST_CODE_SCAN:
                     //返回扫描结果
                     String result = CameraScan.parseScanResult(data);
-//                    Api.codeUrl(result,).postRequest();
-
+                    //0签到，1加课
+                    String[] res=result.split(",");
+                    codeResoulve(res[0],res[1]);
                     ShowToast(result);
                     break;
                 case REQUEST_CODE_PHOTO:
@@ -161,5 +167,66 @@ public class QrCodeActivity extends BaseActivity{
         intent.putExtra(KEY_IS_CONTINUOUS,isContinuousScan);
         ActivityCompat.startActivityForResult(this,intent,REQUEST_CODE_SCAN,optionsCompat.toBundle());
     }
+    void codeResoulve(String type,String id)
+    {
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        if(type.equals("1"))
+        {
+            params.put("classId",Long.parseLong(id));
+            Api.config(ApiConfig.JIONCLASS, params).postRequest(this,new CallBack() {
+                @Override
+                public void OnSuccess(final String res, Response response) {
+                    Log.e("onSuccess", res);
+                    Gson gson = new Gson();
+                    BaseResponse baseResponse = gson.fromJson(res, BaseResponse.class);
+                    if(baseResponse.getCode()==200)
+                    {
+
+                        ShowToastAsyn("加课成功！！");
+                    }
+                    else
+                    {
+                        ShowToastAsyn(baseResponse.getMessage());
+                    }
+                }
+
+                @Override
+                public void OnFailure(Exception e) {
+                    Log.e("onFailure", e.toString());
+                    ShowToastAsyn("连接服务器失败！");
+                }
+            });
+        }
+        else
+            {
+                params.put("classSignId",Long.parseLong(id));
+                params.put("signType",0);
+                Api.config(ApiConfig.SIGN, params).postRequest(this,new CallBack() {
+                    @Override
+                    public void OnSuccess(final String res, Response response) {
+                        Log.e("onSuccess", res);
+                        Gson gson = new Gson();
+                        BaseResponse baseResponse = gson.fromJson(res, BaseResponse.class);
+                        if(baseResponse.getCode()==200)
+                        {
+
+                            ShowToastAsyn("签到成功！！");
+                        }
+                        else
+                        {
+                            ShowToastAsyn(baseResponse.getMessage());
+                        }
+                    }
+
+                    @Override
+                    public void OnFailure(Exception e) {
+                        Log.e("onFailure", e.toString());
+                        ShowToastAsyn("连接服务器失败！");
+                    }
+                });
+            }
+        }
+
+
 
 }

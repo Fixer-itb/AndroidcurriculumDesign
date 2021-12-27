@@ -26,7 +26,6 @@
         <activity
             android:name=".activity.NewClassActivity"
             android:exported="false" />
-
         <activity
             android:name=".activity.ChangeMapActivity"
             android:exported="false" />
@@ -36,9 +35,10 @@
         <activity
             android:name=".activity.GpsActivity"
             android:exported="false" />
+        <activity
+            android:name=".activity.SigninActivity"
+            android:exported="false" />
 
-        <activity android:name=".activity.SigninActivity"
-            android:exported="false"/>
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="3c548c69297bd66d2179a433437ff21f" />

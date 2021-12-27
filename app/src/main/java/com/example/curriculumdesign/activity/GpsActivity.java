@@ -54,6 +54,7 @@ public class GpsActivity extends AppCompatActivity {
     String type;
     String classId;
     String time;
+    String classSignId;
     //是否需要检测后台定位权限，设置为true时，如果用户没有给予后台定位权限会弹窗提示
     private boolean needCheckBackLocation = false;
     //如果设置了target > 28，需要增加这个权限，否则不会弹出"始终允许"这个选择框
@@ -112,6 +113,7 @@ public class GpsActivity extends AppCompatActivity {
         type=intent.getStringExtra("type");
         classId=intent.getStringExtra("classId");
         time=intent.getStringExtra("time");
+        classSignId=intent.getStringExtra("signid");
         setContentView(R.layout.activity_gps);
         if(Build.VERSION.SDK_INT > 28
                 && getApplicationContext().getApplicationInfo().targetSdkVersion > 28) {
