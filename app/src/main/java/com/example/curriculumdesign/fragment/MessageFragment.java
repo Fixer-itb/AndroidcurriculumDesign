@@ -50,6 +50,9 @@ public class MessageFragment extends BaseFragment {
             for (int i = 0; i < 20; i++) {
                 datas.add(new MessageEntity("全局消息","酷酷酷酷酷酷"));
             }
+//            adapter.setOnItemClickListener((obj)->{
+//                showToast("点击了");
+//            });
     }
 
     public static MessageFragment newInstance() {

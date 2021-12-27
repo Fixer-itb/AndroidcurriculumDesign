@@ -23,12 +23,12 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private List<MessageEntity> datas;
     private ClassAdapter.OnItemClickListener mOnItemClickListener;
 
-    public interface OnItemClickListener {
-        void onItemClick(Serializable obj);
-    }
-    public void setOnItemClickListener(ClassAdapter.OnItemClickListener onItemClickListener) {
-        mOnItemClickListener = onItemClickListener;
-    }
+//    public interface OnItemClickListener {
+//        void onItemClick(Serializable obj);
+//    }
+//    public void setOnItemClickListener(ClassAdapter.OnItemClickListener onItemClickListener) {
+//        mOnItemClickListener = onItemClickListener;
+//    }
 
 
     public MessageAdapter(Context mContext) {
@@ -74,12 +74,12 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             super(view);
             message_title=view.findViewById(R.id.tv_new_message_title);
             message_content=view.findViewById(R.id.tv_new_message_content);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mOnItemClickListener.onItemClick(entity);
-                }
-            });
+//            view.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    mOnItemClickListener.onItemClick(entity);
+//                }
+//            });
 
         }
     }
