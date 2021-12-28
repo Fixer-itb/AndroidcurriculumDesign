@@ -1,6 +1,9 @@
 package com.example.curriculumdesign.adapter;
 
+import static com.xuexiang.xui.utils.ResUtils.getResources;
+
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,16 +55,17 @@ public class SignAdapter_tea extends RecyclerView.Adapter<RecyclerView.ViewHolde
         viewHolder.sign_createTime.setText(entity.getGmtCreated());
         String[] type={"二维码签到","GPS签到"};
         viewHolder.sign_type.setText("/"+type[entity.getSignType()]);
-        if (entity.getStatus()==0){
-            Picasso.with(mContext).load(R.mipmap.absence).resize(40,40).into(viewHolder.status);
+        Log.d("entity.getStatus()", "onBindViewHolder: ++"+entity);
+        if (entity.getStatus().equals(0)){
+//            viewHolder.status.setBackgroundDrawable(getResources().getDrawable(R.mipmap.end));
+//            Picasso.with(mContext).load(R.mipmap.end).into(viewHolder.status);
             viewHolder.sign_isClose.setText("已结束");
             viewHolder.sign_isClose.setTextColor(mContext.getResources().getColor(R.color.red));
         }
         else{
-            Picasso.with(mContext).load(R.mipmap.absence1).resize(40,40).into(viewHolder.status);
-
+//            viewHolder.status.setBackgroundDrawable(getResources().getDrawable(R.mipmap.ing));
+//            Picasso.with(mContext).load(R.mipmap.ing).into(viewHolder.status);
         }
-
         viewHolder.signEntity=entity;
     }
 
@@ -74,8 +78,6 @@ public class SignAdapter_tea extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private long id;
-        private Integer isClose;
         private TextView sign_name;
         private TextView sign_createTime;
         private TextView sign_isClose;
@@ -85,11 +87,13 @@ public class SignAdapter_tea extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public ViewHolder(@NonNull View view) {
             super(view);
+
             sign_name=view.findViewById(R.id.sign_stu_name);
             sign_createTime=view.findViewById(R.id.sign_stu_create_time);
             sign_isClose=view.findViewById(R.id.is_close);
             status=view.findViewById(R.id.status);
             sign_type=view.findViewById(R.id.sign_type);
+
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

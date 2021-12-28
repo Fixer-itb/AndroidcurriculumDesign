@@ -23,6 +23,7 @@ import androidx.core.app.NotificationManagerCompat;
 import com.example.curriculumdesign.R;
 import com.example.curriculumdesign.activity.CodeActivity;
 import com.example.curriculumdesign.activity.GpsActivity;
+import com.example.curriculumdesign.activity.QrCodeActivity;
 import com.example.curriculumdesign.receiver.NotifyClickReceiver;
 import com.example.curriculumdesign.utils.ConnectionUtils;
 import com.example.curriculumdesign.utils.SPUtils;
@@ -152,7 +153,7 @@ public class NotificationService extends Service
         if(msglist[0].equals("0"))
         {
             //0为二维码
-            intent = new Intent(this, CodeActivity.class);
+            intent = new Intent(this, QrCodeActivity.class);
         }
         else
         {

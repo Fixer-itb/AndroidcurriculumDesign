@@ -118,7 +118,7 @@ public class StuSignAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             }
             else{
                 change_sign_btn.setBackground(mContext.getResources().getDrawable(R.drawable.bg_btn_color_red));
-//                Picasso.with(mContext).load(R.mipmap.attendance).resize(30,30).centerCrop().into(imageView);
+                Picasso.with(mContext).load(R.mipmap.absence1).resize(30,30).centerCrop().into(imageView);
             }
             change_sign_btn.setOnClickListener(new View.OnClickListener() {
                 @Override

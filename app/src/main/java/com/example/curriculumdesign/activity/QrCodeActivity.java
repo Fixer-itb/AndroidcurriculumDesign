@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,7 +58,10 @@ public class QrCodeActivity extends BaseActivity{
     public static final int RC_CAMERA = 0X01;
     public static final int RC_READ_PHOTO = 0X02;
 
+    private int sign=0;
 
+    private ImageView imageView;
+    private TextView textView;
 
     /**
      * 启动的界面如 R.layout.activity_home
@@ -73,6 +77,8 @@ public class QrCodeActivity extends BaseActivity{
     @Override
     protected void initView() {
         cls = CaptureActivity.class;
+        imageView=findViewById(R.id.jiegu);
+        textView=findViewById(R.id.content);
     }
     /**
      * 加载绑定数据
@@ -81,6 +87,8 @@ public class QrCodeActivity extends BaseActivity{
     protected void initData() {
         checkCameraPermissions();
 
+//        if (sign==0)
+//        finish();
     }
 
     /**
@@ -182,13 +190,26 @@ public class QrCodeActivity extends BaseActivity{
                     Log.e("onSuccess", res);
                     Gson gson = new Gson();
                     BaseResponse baseResponse = gson.fromJson(res, BaseResponse.class);
+                    sign=1;
                     if(baseResponse.getCode()==200)
                     {
-
+                        runOnUiThread(()->{
+                            textView.setVisibility(View.VISIBLE);
+                            imageView.setVisibility(View.VISIBLE);
+                            textView.setText(baseResponse.getMessage());
+                        });
                         ShowToastAsyn("加课成功！！");
                     }
                     else
                     {
+                        runOnUiThread(()->{
+                            imageView.setVisibility(View.VISIBLE);
+                            imageView.setImageResource(R.mipmap.fail);
+                            textView.setTextColor(mContext.getResources().getColor(R.color.red));
+                            textView.setText(baseResponse.getMessage());
+                            textView.setVisibility(View.VISIBLE);
+                        });
+
                         ShowToastAsyn(baseResponse.getMessage());
                     }
                 }
@@ -196,6 +217,14 @@ public class QrCodeActivity extends BaseActivity{
                 @Override
                 public void OnFailure(Exception e) {
                     Log.e("onFailure", e.toString());
+                    runOnUiThread(()->{
+                        imageView.setImageResource(R.mipmap.fail);
+                        textView.setTextColor(mContext.getResources().getColor(R.color.red));
+                        textView.setText("连接服务器失败！");
+                        textView.setVisibility(View.VISIBLE);
+                        });
+
+
                     ShowToastAsyn("连接服务器失败！");
                 }
             });
@@ -213,10 +242,24 @@ public class QrCodeActivity extends BaseActivity{
                         if(baseResponse.getCode()==200)
                         {
 
+                            runOnUiThread(()->{
+                                textView.setVisibility(View.VISIBLE);
+                                imageView.setVisibility(View.VISIBLE);
+                                textView.setText(baseResponse.getMessage());
+
+                            });
+
                             ShowToastAsyn("签到成功！！");
                         }
                         else
                         {
+                            runOnUiThread(()->{
+                                imageView.setImageResource(R.mipmap.fail);
+                                textView.setTextColor(mContext.getResources().getColor(R.color.red));
+                                textView.setText(baseResponse.getMessage());
+                                textView.setVisibility(View.VISIBLE);
+                            });
+
                             ShowToastAsyn(baseResponse.getMessage());
                         }
                     }
@@ -224,6 +267,12 @@ public class QrCodeActivity extends BaseActivity{
                     @Override
                     public void OnFailure(Exception e) {
                         Log.e("onFailure", e.toString());
+                         runOnUiThread(()->{
+                             imageView.setImageResource(R.mipmap.fail);
+                             textView.setTextColor(mContext.getResources().getColor(R.color.red));
+                             textView.setText("连接服务器失败！");
+                             textView.setVisibility(View.VISIBLE);
+                            });
                         ShowToastAsyn("连接服务器失败！");
                     }
                 });

@@ -43,6 +43,23 @@ public class SignEntity implements Serializable {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "SignEntity{" +
+                "gmtCreated='" + gmtCreated + '\'' +
+                ", gmtModified='" + gmtModified + '\'' +
+                ", signId=" + signId +
+                ", classId=" + classId +
+                ", userId=" + userId +
+                ", isTeacher=" + isTeacher +
+                ", signType=" + signType +
+                ", classSignId=" + classSignId +
+                ", locationXy='" + locationXy + '\'' +
+                ", signName='" + signName + '\'' +
+                ", status=" + status +
+                '}';
+    }
+
     public SignEntity(String gmtCreated, String gmtModified, Long signId, Long classId, Long userId, Integer isTeacher, Integer signType, Long classSignId, String locationXy, String signName, Integer status) {
         this.gmtCreated = gmtCreated;
         this.gmtModified = gmtModified;

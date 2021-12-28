@@ -47,7 +47,6 @@ public class ClassDatailActivity extends BaseActivity {
     /**
      * 学生适配器
      */
-    private SignAdapter_stu adapter_stu;
     private SignAdapter_tea adapter_tea;
 
 
@@ -70,7 +69,6 @@ public class ClassDatailActivity extends BaseActivity {
         recyclerView=findViewById(R.id.recyclerSignView);
         class_detail_title=findViewById(R.id.class_detail_title);
         class_detail_content=findViewById(R.id.class_detail_content);
-        adapter_stu=new SignAdapter_stu(mContext);
         adapter_tea=new SignAdapter_tea(mContext);
         btnCode.setOnClickListener((v -> {
             Bundle bundle = new Bundle();
@@ -92,11 +90,10 @@ public class ClassDatailActivity extends BaseActivity {
                 intent.putExtra("classId",String.valueOf(currentClass.getId()));
                 startActivity(intent);
             });
-            recyclerView.setAdapter(adapter_tea);
+//            recyclerView.setAdapter(adapter_tea);
         }
-        else {
-            recyclerView.setAdapter(adapter_stu);
-        }
+
+        recyclerView.setAdapter(adapter_tea);
         class_detail_title.setText(currentClass.getClassName());
         class_detail_content.setText(currentClass.getClassContent());
         initRecyclerView();
@@ -114,12 +111,14 @@ public class ClassDatailActivity extends BaseActivity {
             @Override
             public void OnSuccess(String res, Response response) {
                 refreshLayout.finishRefresh(true);//延时多久关闭动画
+                Gson gson = new Gson();
+                SignResponse body = gson.fromJson(res, SignResponse.class);
+                Log.d("dd321", "OnSuccess: "+body.toString());
+                list=body.getResult();
                runOnUiThread(()->{
-                   Gson gson = new Gson();
-                   SignResponse body = gson.fromJson(res, SignResponse.class);
 //                   System.out.println(body);
+                   adapter_tea.setDatas(list);
                    if (haveAuth()){
-                       adapter_tea.setDatas(body.getResult());
                        adapter_tea.setOnItemClickListener((obj)->{
                            SignEntity entity=(SignEntity) obj;
 //                           Log.d("1", "OnSuccess: "+entity);
@@ -127,13 +126,9 @@ public class ClassDatailActivity extends BaseActivity {
                            bundle.putSerializable("sign",obj);
                            navigateToWithBundle(SignDetailActivity.class,bundle);
                        });
-                       adapter_tea.notifyDataSetChanged();//刷新数据
-
                    }
                    else{
-                       adapter_stu.setDatas(body.getResult());
-                       adapter_stu.notifyDataSetChanged();//刷新数据
-                       adapter_stu.setOnItemClickListener((obj,s)->{
+                       adapter_tea.setOnItemClickListener((obj)->{
                            SignEntity entity=(SignEntity) obj;
                            if (entity.getStatus()==0){
                                ShowToast("签到已结束");
@@ -145,18 +140,14 @@ public class ClassDatailActivity extends BaseActivity {
                                else{
                                    Bundle bundle = new Bundle();
                                    bundle.putString("signid",entity.getClassSignId().toString());
-                                   navgateTo(GpsActivity.class);
+                                   bundle.putString("type","gps");
+                                   navigateToWithBundle(GpsActivity.class,bundle);
                                }
                            }
-
-
                        });
-
                    }
-
+                   adapter_tea.notifyDataSetChanged();//刷新数据
                });
-
-
             }
 
             @Override
@@ -174,7 +165,6 @@ public class ClassDatailActivity extends BaseActivity {
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         refreshLayout.setOnRefreshListener((refreshLayout)->{
-//            refreshLayout.finishRefresh(1000);//延时多久关闭动画
             getSignList();
         });
         recyclerView.setLayoutManager(manager);
@@ -188,7 +178,7 @@ public class ClassDatailActivity extends BaseActivity {
 
     public Boolean haveAuth(){
         TblUser user = sp.getUserFromSP(this);
-        if (user.getRoleId()==0  || (user.getRoleId()==2&&currentUser.getUserId().equals(currentClass.getCreateId()))){
+        if ((user.getRoleId()==2&&currentUser.getUserId().equals(currentClass.getCreateId()))){
             return true;
         }
         else

@@ -76,7 +76,7 @@
             android:layout_gravity="center"
             android:text="停止签到"
             android:background="@color/red"
-            android:enabled="false"
+            android:enabled="true"
             android:id="@+id/stop_btn"
             />
         <View

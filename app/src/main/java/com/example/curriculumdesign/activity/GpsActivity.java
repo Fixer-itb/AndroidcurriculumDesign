@@ -142,7 +142,6 @@ public class GpsActivity extends AppCompatActivity {
         aMap.setMyLocationStyle(myLocationStyle);//设置蓝点
         aMap.getUiSettings().setMyLocationButtonEnabled(true);
         aMap.setMyLocationEnabled(true);
-
         Button btn = findViewById(R.id.btn);
         if(type.equals("sign"))
         {
@@ -411,10 +410,12 @@ public class GpsActivity extends AppCompatActivity {
                 {
 
                     ShowToastAsyn("签到成功！！");
+                    finish();
                 }
                 else
                 {
                     ShowToastAsyn(baseResponse.getMessage());
+                    finish();
                 }
             }
 

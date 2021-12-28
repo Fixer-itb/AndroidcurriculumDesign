@@ -58,6 +58,9 @@ public class SignAdapter_stu extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.sign_isClose.setText("已结束");
             viewHolder.sign_isClose.setTextColor(mContext.getResources().getColor(R.color.red));
         }
+        else{
+            Picasso.with(mContext).load(R.mipmap.absence1).resize(40,40).into(viewHolder.status);
+        }
         viewHolder.signEntity=entity;
     }
 

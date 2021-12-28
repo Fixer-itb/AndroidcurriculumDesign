@@ -15,4 +15,11 @@ public class SignResponse extends BaseResponse {
     public void setResult(List<SignEntity> result) {
         this.result = result;
     }
+
+    @Override
+    public String toString() {
+        return "SignResponse{" +
+                "result=" + result +
+                '}';
+    }
 }

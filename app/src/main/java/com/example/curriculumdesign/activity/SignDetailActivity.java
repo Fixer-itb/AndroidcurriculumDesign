@@ -65,9 +65,12 @@ public class SignDetailActivity extends BaseActivity {
         if (sign.getStatus()==0) {stop_btn.setEnabled(true);
         stop_btn.setBackground(getResources().getDrawable(R.color.Gray_red));
         }
-        stop_btn.setOnClickListener((v -> {
-            stopSign();
-        }));
+        else {
+            stop_btn.setOnClickListener((v -> {
+                stopSign();
+            }));
+        }
+
         if (sign.getSignType()==0){
             btnCode.setVisibility(View.VISIBLE);
             btnGps.setVisibility(View.GONE);
@@ -99,12 +102,18 @@ public class SignDetailActivity extends BaseActivity {
                 Log.d("TAG", "OnSuccess: +"+res);
                 if (Response.getCode() == 200) {
                    ShowToastAsyn("成功停止");
-                   stop_btn.setEnabled(true);
-                   stop_btn.setBackground(getResources().getDrawable(R.color.Gray_red));
-                    flush(stop_btn);
+                   runOnUiThread(()->{
+                       stop_btn.setEnabled(false);
+                       stop_btn.setBackground(getResources().getDrawable(R.color.Gray_red));
+                   });
                 }
                 else {
-                    flush(stop_btn);
+                    runOnUiThread(()->{
+                        stop_btn.setEnabled(false);
+                        stop_btn.setBackground(getResources().getDrawable(R.color.Gray_red));
+                    });
+                    ShowToastAsyn(Response.getMessage());
+
                 }
 
             }
