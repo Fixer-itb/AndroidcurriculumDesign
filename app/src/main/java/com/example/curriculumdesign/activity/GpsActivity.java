@@ -157,13 +157,13 @@ public class GpsActivity extends AppCompatActivity {
                 if(type.equals("sign"))
                 {
                     Long classId1=Long.parseLong(classId);
-                    String locationXY=jingdu+","+weidu;
+                    String locationXY=weidu+","+jingdu;
                     Long time1=Long.parseLong(time);
                     startSign(classId1,locationXY,1,time1);
                 }
                 else
                 {
-                    String locationXY=jingdu+","+weidu;
+                    String locationXY=weidu+","+jingdu;
                     sign(classSignId,locationXY);
                 }
                 Log.e("s", "jingdu: " + jingdu);
