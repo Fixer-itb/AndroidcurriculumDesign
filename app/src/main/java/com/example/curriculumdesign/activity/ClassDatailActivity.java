@@ -48,8 +48,6 @@ public class ClassDatailActivity extends BaseActivity {
      * 学生适配器
      */
     private SignAdapter_tea adapter_tea;
-
-
     private List<SignEntity> list = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
 
@@ -92,13 +90,11 @@ public class ClassDatailActivity extends BaseActivity {
             });
 //            recyclerView.setAdapter(adapter_tea);
         }
-
-        recyclerView.setAdapter(adapter_tea);
         class_detail_title.setText(currentClass.getClassName());
         class_detail_content.setText(currentClass.getClassContent());
         initRecyclerView();
-        getSignList();
 
+        recyclerView.setAdapter(adapter_tea);
 
     }
 
@@ -110,18 +106,20 @@ public class ClassDatailActivity extends BaseActivity {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void OnSuccess(String res, Response response) {
-                refreshLayout.finishRefresh(true);//延时多久关闭动画
-                Gson gson = new Gson();
-                SignResponse body = gson.fromJson(res, SignResponse.class);
-                Log.d("dd321", "OnSuccess: "+body.toString());
-                list=body.getResult();
                runOnUiThread(()->{
-//                   System.out.println(body);
+                   Log.e("TAG", "OnSuccess: "+res);
+                   refreshLayout.finishRefresh(true);//延时多久关闭动画
+                   Gson gson = new Gson();
+                   SignResponse body = gson.fromJson(res, SignResponse.class);
+                   list=body.getResult();
+                   if (list==null||list.size()<=0){
+                       list=null;
+                       adapter_tea.setDatas(null);
+                   }
                    adapter_tea.setDatas(list);
                    if (haveAuth()){
                        adapter_tea.setOnItemClickListener((obj)->{
                            SignEntity entity=(SignEntity) obj;
-//                           Log.d("1", "OnSuccess: "+entity);
                            Bundle bundle = new Bundle();
                            bundle.putSerializable("sign",obj);
                            navigateToWithBundle(SignDetailActivity.class,bundle);
@@ -146,6 +144,7 @@ public class ClassDatailActivity extends BaseActivity {
                            }
                        });
                    }
+
                    adapter_tea.notifyDataSetChanged();//刷新数据
                });
             }
@@ -168,6 +167,7 @@ public class ClassDatailActivity extends BaseActivity {
             getSignList();
         });
         recyclerView.setLayoutManager(manager);
+        getSignList();
     }
 
 

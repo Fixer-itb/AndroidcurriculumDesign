@@ -74,11 +74,11 @@ public class SignStuFragment extends BaseFragment {
         params.put("classSignId",currentSign.getClassSignId());
         Gson gson = new Gson();
         if (categoryId==0){
-            Api.config(ApiConfig.FINISHSTUDENT,params).getRequest(mRootView.getContext(), new CallBack() {
+            Api.config(ApiConfig.FINISHSTUDENT,params).getRequest(getActivity(), new CallBack() {
                 @SuppressLint("NotifyDataSetChanged")
                 @Override
                 public void OnSuccess(String res, Response response) {
-                    refreshLayout.finishRefresh(true);//延时多久关闭动画
+
                     getActivity().runOnUiThread(()->{
                     SignStuResponse json = gson.fromJson(res, SignStuResponse.class);
                     List<TblUser> list = json.getResult();
@@ -91,6 +91,7 @@ public class SignStuFragment extends BaseFragment {
                             datas=null;
                             adapter.setDatas(datas);
                         }
+                        refreshLayout.finishRefresh(true);//延时多久关闭动画
                         adapter.notifyDataSetChanged();//刷新数据
                 });
 

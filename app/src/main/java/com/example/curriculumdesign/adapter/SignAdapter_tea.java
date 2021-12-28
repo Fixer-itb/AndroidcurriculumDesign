@@ -34,7 +34,7 @@ public class SignAdapter_tea extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_class_detail_for_stu, parent, false);
-        SignAdapter_tea.ViewHolder viewHolder = new SignAdapter_tea.ViewHolder(view);
+        ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
@@ -49,13 +49,12 @@ public class SignAdapter_tea extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        SignAdapter_tea.ViewHolder viewHolder=(SignAdapter_tea.ViewHolder)holder;
+        ViewHolder viewHolder=(ViewHolder)holder;
         SignEntity entity = datas.get(position);
         viewHolder.sign_name.setText(entity.getSignName());
         viewHolder.sign_createTime.setText(entity.getGmtCreated());
         String[] type={"二维码签到","GPS签到"};
         viewHolder.sign_type.setText("/"+type[entity.getSignType()]);
-        Log.d("entity.getStatus()", "onBindViewHolder: ++"+entity);
         if (entity.getStatus().equals(0)){
 //            viewHolder.status.setBackgroundDrawable(getResources().getDrawable(R.mipmap.end));
 //            Picasso.with(mContext).load(R.mipmap.end).into(viewHolder.status);
@@ -63,6 +62,8 @@ public class SignAdapter_tea extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewHolder.sign_isClose.setTextColor(mContext.getResources().getColor(R.color.red));
         }
         else{
+            viewHolder.sign_isClose.setText("进行中");
+            viewHolder.sign_isClose.setTextColor(mContext.getResources().getColor(R.color.green));
 //            viewHolder.status.setBackgroundDrawable(getResources().getDrawable(R.mipmap.ing));
 //            Picasso.with(mContext).load(R.mipmap.ing).into(viewHolder.status);
         }
@@ -87,7 +88,6 @@ public class SignAdapter_tea extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public ViewHolder(@NonNull View view) {
             super(view);
-
             sign_name=view.findViewById(R.id.sign_stu_name);
             sign_createTime=view.findViewById(R.id.sign_stu_create_time);
             sign_isClose=view.findViewById(R.id.is_close);

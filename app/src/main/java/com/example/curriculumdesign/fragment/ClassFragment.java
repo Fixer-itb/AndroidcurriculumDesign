@@ -57,7 +57,7 @@ public class ClassFragment extends BaseFragment {
         adapter = new ClassAdapter(getActivity());
 
         initRecyclerView();
-        getClass(true,categoryId);
+//        getClass(true,categoryId);
         recyclerView.setAdapter(adapter);
 //        tv.setText(title);
 
@@ -103,7 +103,6 @@ public class ClassFragment extends BaseFragment {
                             list= body.getResult().getList();
                         }
                     }catch (Exception e){
-//                        Log.d("error!!!:::",res);
                         for (int i = 0; i <8 ; i++) {
                             list.add(new ClassEntity("深度学习(2021_10_17)","快来选课"));
                         }
