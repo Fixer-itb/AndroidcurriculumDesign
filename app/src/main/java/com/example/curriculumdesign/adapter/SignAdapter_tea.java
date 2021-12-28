@@ -50,10 +50,16 @@ public class SignAdapter_tea extends RecyclerView.Adapter<RecyclerView.ViewHolde
         SignEntity entity = datas.get(position);
         viewHolder.sign_name.setText(entity.getSignName());
         viewHolder.sign_createTime.setText(entity.getGmtCreated());
+        String[] type={"二维码签到","GPS签到"};
+        viewHolder.sign_type.setText("/"+type[entity.getSignType()]);
         if (entity.getStatus()==0){
             Picasso.with(mContext).load(R.mipmap.absence).resize(40,40).into(viewHolder.status);
             viewHolder.sign_isClose.setText("已结束");
             viewHolder.sign_isClose.setTextColor(mContext.getResources().getColor(R.color.red));
+        }
+        else{
+            Picasso.with(mContext).load(R.mipmap.absence1).resize(40,40).into(viewHolder.status);
+
         }
 
         viewHolder.signEntity=entity;
@@ -73,6 +79,7 @@ public class SignAdapter_tea extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private TextView sign_name;
         private TextView sign_createTime;
         private TextView sign_isClose;
+        private TextView sign_type;
         private ImageView status;
         private SignEntity signEntity;
 
@@ -82,6 +89,7 @@ public class SignAdapter_tea extends RecyclerView.Adapter<RecyclerView.ViewHolde
             sign_createTime=view.findViewById(R.id.sign_stu_create_time);
             sign_isClose=view.findViewById(R.id.is_close);
             status=view.findViewById(R.id.status);
+            sign_type=view.findViewById(R.id.sign_type);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

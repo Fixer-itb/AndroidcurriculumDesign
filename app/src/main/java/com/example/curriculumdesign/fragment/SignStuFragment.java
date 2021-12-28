@@ -145,7 +145,7 @@ public class SignStuFragment extends BaseFragment {
 
 
     private void changeStatus(TblUser entity){
-        Log.d("1", "initView: "+entity.getUsername()+"  "
+        Log.d("1", "initView: "+entity.getUserId()+"  "
                 +categoryId+" "+currentSign.getClassSignId());
         HashMap<String,Object> params = new HashMap<>();
         params.put("userId",entity.getUserId());

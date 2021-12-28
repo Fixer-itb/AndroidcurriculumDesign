@@ -3,6 +3,7 @@ package com.example.curriculumdesign.activity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -109,13 +110,14 @@ public class ClassDatailActivity extends BaseActivity {
         HashMap<String,Object> params = new HashMap<>();
         params.put("classId",currentClass.getId());
         Api.config(ApiConfig.SIGNLIST,params).getRequest(mContext, new CallBack() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void OnSuccess(String res, Response response) {
                 refreshLayout.finishRefresh(true);//延时多久关闭动画
                runOnUiThread(()->{
                    Gson gson = new Gson();
                    SignResponse body = gson.fromJson(res, SignResponse.class);
-                   System.out.println(body);
+//                   System.out.println(body);
                    if (haveAuth()){
                        adapter_tea.setDatas(body.getResult());
                        adapter_tea.setOnItemClickListener((obj)->{
@@ -129,7 +131,8 @@ public class ClassDatailActivity extends BaseActivity {
 
                    }
                    else{
-                       adapter_stu.setDatas(list);
+                       adapter_stu.setDatas(body.getResult());
+                       adapter_stu.notifyDataSetChanged();//刷新数据
                        adapter_stu.setOnItemClickListener((obj,s)->{
                            SignEntity entity=(SignEntity) obj;
                            if (entity.getStatus()==0){
@@ -148,7 +151,7 @@ public class ClassDatailActivity extends BaseActivity {
 
 
                        });
-                       adapter_stu.notifyDataSetChanged();//刷新数据
+
                    }
 
                });

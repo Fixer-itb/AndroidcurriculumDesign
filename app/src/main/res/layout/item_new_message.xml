@@ -30,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:textSize="12sp"
             android:layout_marginStart="20dp"
             android:layout_gravity="right"
             android:text="2021/12/26 13:38"
@@ -62,7 +63,9 @@
             android:layout_height="wrap_content"
             android:textStyle=""
             android:text="内容  发起了签到"
-            android:gravity="left" />
+            android:gravity="left"
+            android:layout_marginBottom="2sp"
+            />
 
     </LinearLayout>
 

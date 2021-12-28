@@ -3,6 +3,7 @@ package com.example.curriculumdesign.activity;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import com.example.curriculumdesign.api.Api;
 import com.example.curriculumdesign.api.ApiConfig;
 import com.example.curriculumdesign.api.CallBack;
 import com.example.curriculumdesign.entity.BaseResponse;
+import com.example.curriculumdesign.entity.UserResponse;
 import com.example.curriculumdesign.utils.StringUtils;
 import com.google.gson.Gson;
 
@@ -128,6 +130,7 @@ public class LoginActivity extends BaseActivity {
                     Headers headers=response.headers();
                     String token=headers.get("Authorization");
                     SaveToSP("Authorization",token);
+                    getCurrentUser();
                     navgateToWithFlag(HomeActivity.class,
                             Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     ShowToastAsyn("登录成功");
@@ -139,6 +142,39 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void OnFailure(Exception e) {
 
+            }
+        });
+    }
+
+    void getCurrentUser()
+    {
+        HashMap<String, Object> params = new HashMap<>();
+        Api.config(ApiConfig.CURRENT, params).getRequest(mContext, new CallBack() {
+            @Override
+            public void OnSuccess(final String res, Response response) {
+                Log.e("onSuccess", res);
+                Gson gson = new Gson();
+                UserResponse userResponse = gson.fromJson(res, UserResponse.class);
+//                ShowToastAsyn(userResponse.toString());
+                if(userResponse.getCode()==200)
+                {
+                    setUserToSP(userResponse.getResult());
+                    SaveToSP("username",userResponse.getResult().getUsername());
+                    SaveToSP("userid",String.valueOf(userResponse.getResult().getUserId()));
+                    SaveToSP("roleid",String.valueOf(userResponse.getResult().getRoleId()));
+                    SaveToSP("avatarurl",String.valueOf(userResponse.getResult().getAvatarUrl()));
+                }
+                else
+                {
+                    ShowToastAsyn("获取用户数据失败！，请重新登陆！");
+                }
+
+            }
+
+            @Override
+            public void OnFailure(Exception e) {
+//                Log.e("onFailure", e.getMessage());
+                ShowToastAsyn("连接服务器失败！");
             }
         });
     }

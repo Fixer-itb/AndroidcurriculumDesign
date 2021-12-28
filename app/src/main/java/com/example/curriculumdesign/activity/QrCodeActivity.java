@@ -124,6 +124,7 @@ public class QrCodeActivity extends BaseActivity{
                     finish();
             }
         }
+        Log.d("TAG", "onActivityResult: 没有操作");
     }
 
 
