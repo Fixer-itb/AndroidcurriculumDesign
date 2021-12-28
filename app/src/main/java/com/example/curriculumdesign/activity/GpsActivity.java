@@ -148,6 +148,10 @@ public class GpsActivity extends AppCompatActivity {
         {
             btn.setText("发起签到");
         }
+        else
+        {
+            btn.setText("签到");
+        }
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,6 +161,11 @@ public class GpsActivity extends AppCompatActivity {
                     String locationXY=jingdu+","+weidu;
                     Long time1=Long.parseLong(time);
                     startSign(classId1,locationXY,1,time1);
+                }
+                else
+                {
+                    String locationXY=jingdu+","+weidu;
+                    sign(classSignId,locationXY);
                 }
                 Log.e("s", "jingdu: " + jingdu);
                 Log.e("s", "weidu: " + weidu);
@@ -386,6 +395,37 @@ public class GpsActivity extends AppCompatActivity {
             }
         });
     }
+    void sign(String id,String location)
+    {
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("classSignId",Long.parseLong(id));
+        params.put("signType",0);
+        params.put("locationXy",location);
+        Api.config(ApiConfig.SIGN, params).postRequest(this,new CallBack() {
+            @Override
+            public void OnSuccess(final String res, Response response) {
+                Log.e("onSuccess", res);
+                Gson gson = new Gson();
+                BaseResponse baseResponse = gson.fromJson(res, BaseResponse.class);
+                if(baseResponse.getCode()==200)
+                {
+
+                    ShowToastAsyn("签到成功！！");
+                }
+                else
+                {
+                    ShowToastAsyn(baseResponse.getMessage());
+                }
+            }
+
+            @Override
+            public void OnFailure(Exception e) {
+                Log.e("onFailure", e.toString());
+                ShowToastAsyn("连接服务器失败！");
+            }
+        });
+    }
+
     public void ShowToastAsyn(String msg)
     {
         Looper.prepare();
